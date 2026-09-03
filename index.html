@@ -1,0 +1,2800 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLASSROOM TOOLS</title>
+
+  <style>
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.6);
+      --line: rgba(255,255,255,0.35);
+      --soft-line: rgba(255,255,255,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      overflow: hidden;
+      text-transform: uppercase;
+    }
+
+    button,
+    select,
+    textarea,
+    input {
+      font: inherit;
+      text-transform: uppercase;
+    }
+
+    button,
+    select,
+    input[type="color"] {
+      cursor: pointer;
+    }
+
+    button:hover,
+    select:hover {
+      opacity: 0.8;
+    }
+
+
+    /* ================================================================
+       NAVIGATION
+    ================================================================ */
+
+    .tool-nav {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 5000;
+
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+
+    .tool-tab,
+    .theme-button {
+      border: 0;
+
+      background: transparent;
+      color: var(--text);
+
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+
+      padding: 0.2rem 0.38rem;
+      border-radius: 4px;
+    }
+
+    .tool-tab.active {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+
+    /* ================================================================
+       THEME PANEL
+    ================================================================ */
+
+    .theme-panel {
+      position: fixed;
+
+      top: 2.9rem;
+      left: 1rem;
+
+      z-index: 5000;
+
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+
+      padding: 0.4rem;
+
+      background: var(--text);
+      color: var(--bg);
+
+      border-radius: 5px;
+    }
+
+    .theme-panel.hidden {
+      display: none;
+    }
+
+    .theme-panel label {
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    #theme-color {
+      width: 26px;
+      height: 20px;
+
+      padding: 0;
+
+      border: none;
+      background: transparent;
+    }
+
+    #theme-reset {
+      border: none;
+
+      padding: 0.15rem 0.3rem;
+
+      background: var(--bg);
+      color: var(--text);
+
+      border-radius: 3px;
+
+      font-size: 0.66rem;
+      font-weight: 800;
+    }
+
+
+    /* ================================================================
+       TOOL VIEWS
+    ================================================================ */
+
+    .tool-view {
+      display: none;
+
+      width: 100%;
+      height: 100%;
+    }
+
+    .tool-view.active {
+      display: flex;
+    }
+
+
+    /* ================================================================
+       TIMER
+    ================================================================ */
+
+    #timer-tool {
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .timer-top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      gap: 0.4rem;
+
+      padding: 1.5rem 1rem 0;
+
+      flex-wrap: wrap;
+    }
+
+    .timer-top button {
+      font-size: 0.78rem;
+      font-weight: 700;
+
+      border: none;
+      border-radius: 4px;
+
+      padding: 0.22rem 0.42rem;
+
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .timer-wrap {
+      flex: 1;
+      min-height: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 1rem;
+    }
+
+    #timer-display {
+      font-size: clamp(7rem, 22vw, 20rem);
+      font-weight: 800;
+
+      line-height: 0.85;
+      letter-spacing: 0.02em;
+
+      cursor: text;
+      user-select: text;
+
+      font-variant-numeric: tabular-nums;
+
+      outline: none;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    #timer-display::selection {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .timer-bottom {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      gap: 0.8rem;
+
+      padding: 0 1rem 1.5rem;
+    }
+
+    .timer-bottom button {
+      border: none;
+
+      background: transparent;
+      color: var(--text);
+
+      padding: 0.2rem;
+
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .timer-bottom button:hover {
+      text-decoration: underline;
+      opacity: 1;
+    }
+
+    #timer-tool.flash {
+      animation: timerFlash 0.7s steps(2, end) 6;
+    }
+
+    @keyframes timerFlash {
+      50% {
+        background: var(--text);
+        color: var(--bg);
+      }
+    }
+
+
+    /* ================================================================
+       NAME PICKER
+    ================================================================ */
+
+    #names-tool {
+      flex-direction: column;
+
+      position: relative;
+
+      overflow: hidden;
+
+      font-family:
+        "Poppins",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+    }
+
+    #name-gentle-indicator {
+      position: absolute;
+
+      top: 0.75rem;
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      opacity: 0;
+
+      font-size: 1.5rem;
+
+      transition: opacity 0.25s ease;
+
+      pointer-events: none;
+    }
+
+    #name-gentle-indicator.on {
+      opacity: 0.9;
+    }
+
+    #name-main {
+      flex: 1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 2rem;
+
+      cursor: pointer;
+      text-align: center;
+
+      perspective: 1000px;
+
+      min-height: 0;
+    }
+
+    .name-stage-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #name-display {
+      font-size: clamp(2rem, 10vw, 10rem);
+      font-weight: 900;
+
+      letter-spacing: 0.02em;
+      line-height: 1;
+
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+
+    #name-repeats-indicator {
+      margin-top: 0.6rem;
+
+      font-size: 1.6rem;
+
+      opacity: 0;
+
+      transition: opacity 0.25s ease;
+    }
+
+    #name-repeats-indicator.on {
+      opacity: 0.95;
+    }
+
+    @keyframes nameFlip {
+      0% {
+        transform: rotateX(90deg);
+        opacity: 0;
+      }
+
+      60% {
+        transform: rotateX(-10deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: rotateX(0deg);
+        opacity: 1;
+      }
+    }
+
+    #name-display.flip {
+      animation: nameFlip 380ms cubic-bezier(.2,.7,.2,1);
+    }
+
+    #name-editor {
+      padding: 1rem 2rem;
+
+      background: color-mix(
+        in srgb,
+        var(--bg) 92%,
+        transparent
+      );
+
+      border-top: 1px solid var(--soft-line);
+
+      max-height: 65vh;
+
+      overflow-y: auto;
+    }
+
+    #name-editor.hidden {
+      display: none;
+    }
+
+    #name-editor h2,
+    #name-editor h3 {
+      margin: 0.25rem 0 0.5rem;
+    }
+
+    #name-editor textarea {
+      width: 100%;
+      height: 100px;
+
+      margin-bottom: 1rem;
+
+      border-radius: 0.5rem;
+      border: 1px solid var(--line);
+
+      padding: 0.75rem;
+
+      background: rgba(255,255,255,0.12);
+      color: var(--text);
+
+      resize: vertical;
+    }
+
+    #name-save {
+      padding: 0.35rem 0.65rem;
+
+      border: none;
+      border-radius: 4px;
+
+      background: var(--text);
+      color: var(--bg);
+
+      font-weight: 700;
+    }
+
+    .name-footer {
+      display: flex;
+      justify-content: center;
+
+      padding: 0.75rem;
+    }
+
+    #name-reset {
+      border: none;
+
+      background: transparent;
+      color: var(--text);
+
+      font-weight: 700;
+    }
+
+
+    /* ================================================================
+       GROUP GENERATOR
+    ================================================================ */
+
+    #groups-tool {
+      flex-direction: column;
+
+      overflow: hidden;
+    }
+
+    #group-main {
+      flex: 1;
+      min-height: 0;
+
+      display: flex;
+      flex-direction: column;
+
+      padding: 1.5rem 1.25rem 0.5rem;
+
+      gap: 0.5rem;
+    }
+
+    .group-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      gap: 0.55rem;
+
+      flex-wrap: wrap;
+    }
+
+    .group-controls label {
+      font-size: 0.8rem;
+      font-weight: 700;
+
+      letter-spacing: 0.08em;
+    }
+
+    .group-controls select,
+    .group-controls button {
+      border: none;
+
+      background: var(--text);
+      color: var(--bg);
+
+      padding: 0.16rem 0.32rem;
+
+      font-weight: 800;
+    }
+
+    .group-controls option {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    #groups-wrap {
+      flex: 1;
+      min-height: 0;
+
+      overflow: auto;
+
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+
+      padding-top: 1.5rem;
+    }
+
+    #groups-container {
+      width: min(1100px, 100%);
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+
+      gap: 1.5rem;
+    }
+
+    .group-placeholder {
+      grid-column: 1 / -1;
+
+      text-align: center;
+
+      font-size: clamp(1.5rem, 5vw, 4rem);
+      font-weight: 900;
+
+      padding: 4rem 1rem;
+
+      align-self: center;
+    }
+
+    .group-card {
+      border-top: 1px solid var(--line);
+
+      padding-top: 1rem;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .group-title {
+      font-size: 0.8rem;
+
+      letter-spacing: 0.12em;
+
+      margin-bottom: 1rem;
+
+      color: var(--muted);
+    }
+
+    .group-names {
+      flex: 1;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .group-name {
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 900;
+
+      line-height: 1.25;
+
+      margin-bottom: 0.35rem;
+    }
+
+    #group-editor {
+      border-top: 1px solid var(--line);
+
+      padding: 1rem;
+
+      max-height: 45vh;
+
+      overflow: auto;
+    }
+
+    #group-editor.hidden {
+      display: none;
+    }
+
+    #group-editor h2 {
+      margin: 0 0 0.75rem;
+
+      font-size: 0.9rem;
+
+      letter-spacing: 0.1em;
+    }
+
+    #group-editor textarea {
+      width: 100%;
+      min-height: 160px;
+
+      background: transparent;
+      color: var(--text);
+
+      border: 1px solid var(--line);
+
+      padding: 0.75rem;
+
+      resize: vertical;
+
+      margin-bottom: 0.75rem;
+    }
+
+    #group-save {
+      border: none;
+
+      background: var(--text);
+      color: var(--bg);
+
+      padding: 0.2rem 0.4rem;
+
+      font-weight: 800;
+    }
+
+    .group-footer {
+      display: flex;
+      justify-content: center;
+
+      padding: 0.75rem;
+    }
+
+    #group-reset {
+      border: none;
+
+      background: transparent;
+      color: var(--text);
+
+      font-weight: 700;
+    }
+
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+
+    @media (max-width: 700px) {
+
+      .tool-nav {
+        top: 0.65rem;
+        left: 0.65rem;
+      }
+
+      .theme-panel {
+        top: 2.5rem;
+        left: 0.65rem;
+      }
+
+      .timer-top {
+        padding-top: 3rem;
+      }
+
+      #timer-display {
+        font-size: clamp(5rem, 24vw, 10rem);
+      }
+
+      #group-main {
+        padding: 3rem 1rem 1rem;
+      }
+
+      #groups-container {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      #name-main {
+        padding-top: 4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- ================================================================
+       NAV
+  ================================================================ -->
+
+  <nav class="tool-nav">
+
+    <button
+      class="tool-tab active"
+      data-tool="timer"
+    >
+      TIMER
+    </button>
+
+    <button
+      class="tool-tab"
+      data-tool="names"
+    >
+      NAMES
+    </button>
+
+    <button
+      class="tool-tab"
+      data-tool="groups"
+    >
+      GROUPS
+    </button>
+
+    <button
+      id="theme-button"
+      class="theme-button"
+    >
+      THEME
+    </button>
+
+  </nav>
+
+
+  <!-- ================================================================
+       THEME
+  ================================================================ -->
+
+  <div
+    id="theme-panel"
+    class="theme-panel hidden"
+  >
+
+    <label for="theme-color">
+      BACKGROUND
+    </label>
+
+    <input
+      id="theme-color"
+      type="color"
+      value="#000000"
+    />
+
+    <button id="theme-reset">
+      BLACK
+    </button>
+
+  </div>
+
+
+  <!-- ================================================================
+       TIMER
+  ================================================================ -->
+
+  <section
+    id="timer-tool"
+    class="tool-view active"
+  >
+
+    <div class="timer-top">
+
+      <button data-timer-minutes="1">
+        1 MIN
+      </button>
+
+      <button data-timer-minutes="2">
+        2 MIN
+      </button>
+
+      <button data-timer-minutes="5">
+        5 MIN
+      </button>
+
+      <button data-timer-minutes="10">
+        10 MIN
+      </button>
+
+      <button data-timer-minutes="15">
+        15 MIN
+      </button>
+
+      <button data-timer-minutes="30">
+        30 MIN
+      </button>
+
+      <button id="timer-reading">
+        READING
+      </button>
+
+    </div>
+
+
+    <main class="timer-wrap">
+
+      <div
+        id="timer-display"
+        contenteditable="true"
+        spellcheck="false"
+      >
+        05:00
+      </div>
+
+    </main>
+
+
+    <div class="timer-bottom">
+
+      <button id="timer-start-pause">
+        START
+      </button>
+
+      <button id="timer-reset">
+        RESET
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================================================================
+       NAME PICKER
+  ================================================================ -->
+
+  <section
+    id="names-tool"
+    class="tool-view"
+  >
+
+    <div
+      id="name-gentle-indicator"
+      aria-hidden="true"
+    >
+      🦅
+    </div>
+
+
+    <main id="name-main">
+
+      <div class="name-stage-inner">
+
+        <div id="name-display">
+          ADD NAMES WITH E
+        </div>
+
+        <div
+          id="name-repeats-indicator"
+          aria-hidden="true"
+        >
+          ♾
+        </div>
+
+      </div>
+
+    </main>
+
+
+    <section
+      id="name-editor"
+      class="hidden"
+    >
+
+      <h2>
+        CLASS LIST
+      </h2>
+
+      <textarea
+        id="name-names-input"
+        placeholder="TYPE OR PASTE NAMES HERE — ONE PER LINE"
+      ></textarea>
+
+
+      <h3>
+        GENTLE EXCLUSIONS (OPTIONAL)
+      </h3>
+
+      <textarea
+        id="name-gentle-input"
+        placeholder="OPTIONAL NAMES TO EXCLUDE IN GENTLE MODE"
+      ></textarea>
+
+
+      <button id="name-save">
+        SAVE
+      </button>
+
+    </section>
+
+
+    <footer class="name-footer">
+
+      <button id="name-reset">
+        RESET
+      </button>
+
+    </footer>
+
+  </section>
+
+
+  <!-- ================================================================
+       GROUP GENERATOR
+  ================================================================ -->
+
+  <section
+    id="groups-tool"
+    class="tool-view"
+  >
+
+    <main id="group-main">
+
+      <div class="group-controls">
+
+
+        <label for="group-class-select">
+          CLASS
+        </label>
+
+
+        <select id="group-class-select">
+
+          <option value="CLASS1">
+            CLASS 1
+          </option>
+
+          <option value="CLASS2">
+            CLASS 2
+          </option>
+
+          <option value="CLASS3">
+            CLASS 3
+          </option>
+
+        </select>
+
+
+        <label for="group-size">
+          GROUP SIZE
+        </label>
+
+
+        <select id="group-size">
+
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4" selected>4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+
+        </select>
+
+
+        <button id="group-generate">
+          GENERATE
+        </button>
+
+
+      </div>
+
+
+      <div id="groups-wrap">
+
+        <div id="groups-container">
+
+          <div class="group-placeholder">
+            ADD NAMES WITH E
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+
+    <section
+      id="group-editor"
+      class="hidden"
+    >
+
+      <h2 id="group-editor-title">
+        CLASS 1 LIST
+      </h2>
+
+
+      <textarea
+        id="group-names-input"
+        placeholder="TYPE OR PASTE NAMES HERE — ONE PER LINE"
+      ></textarea>
+
+
+      <button id="group-save">
+        SAVE
+      </button>
+
+    </section>
+
+
+    <footer class="group-footer">
+
+      <button id="group-reset">
+        RESET
+      </button>
+
+    </footer>
+
+  </section>
+
+
+  <script>
+
+    /* ================================================================
+       STORAGE
+    ================================================================ */
+
+    const STORAGE = {
+      nameList: "classroomTools_nameList",
+      gentleList: "classroomTools_gentleList",
+
+      class1: "classroomTools_class1",
+      class2: "classroomTools_class2",
+      class3: "classroomTools_class3",
+
+      theme: "classroomTools_theme"
+    };
+
+
+    function loadArray(key) {
+
+      try {
+
+        const saved =
+          localStorage.getItem(key);
+
+        if (!saved) {
+          return [];
+        }
+
+        return JSON.parse(saved);
+
+      }
+
+      catch {
+        return [];
+      }
+
+    }
+
+
+    function saveArray(key, array) {
+
+      localStorage.setItem(
+        key,
+        JSON.stringify(array)
+      );
+
+    }
+
+
+
+    /* ================================================================
+       THEME
+    ================================================================ */
+
+    const themeButton =
+      document.getElementById(
+        "theme-button"
+      );
+
+    const themePanel =
+      document.getElementById(
+        "theme-panel"
+      );
+
+    const themeColor =
+      document.getElementById(
+        "theme-color"
+      );
+
+    const themeReset =
+      document.getElementById(
+        "theme-reset"
+      );
+
+
+    function getContrastColor(hex) {
+
+      const color =
+        hex.replace("#", "");
+
+
+      const r =
+        parseInt(
+          color.substring(0,2),
+          16
+        );
+
+      const g =
+        parseInt(
+          color.substring(2,4),
+          16
+        );
+
+      const b =
+        parseInt(
+          color.substring(4,6),
+          16
+        );
+
+
+      const brightness =
+        (
+          r * 299 +
+          g * 587 +
+          b * 114
+        )
+        /
+        1000;
+
+
+      return brightness > 150
+        ? "#000000"
+        : "#ffffff";
+
+    }
+
+
+    function applyTheme(color) {
+
+      const textColor =
+        getContrastColor(color);
+
+
+      document.documentElement
+        .style
+        .setProperty(
+          "--bg",
+          color
+        );
+
+
+      document.documentElement
+        .style
+        .setProperty(
+          "--text",
+          textColor
+        );
+
+
+      const muted =
+        textColor === "#ffffff"
+          ? "rgba(255,255,255,0.6)"
+          : "rgba(0,0,0,0.6)";
+
+
+      const line =
+        textColor === "#ffffff"
+          ? "rgba(255,255,255,0.35)"
+          : "rgba(0,0,0,0.35)";
+
+
+      const softLine =
+        textColor === "#ffffff"
+          ? "rgba(255,255,255,0.12)"
+          : "rgba(0,0,0,0.12)";
+
+
+      document.documentElement
+        .style
+        .setProperty(
+          "--muted",
+          muted
+        );
+
+
+      document.documentElement
+        .style
+        .setProperty(
+          "--line",
+          line
+        );
+
+
+      document.documentElement
+        .style
+        .setProperty(
+          "--soft-line",
+          softLine
+        );
+
+
+      themeColor.value = color;
+
+
+      localStorage.setItem(
+        STORAGE.theme,
+        color
+      );
+
+    }
+
+
+    themeButton.addEventListener(
+      "click",
+      () => {
+
+        themePanel
+          .classList
+          .toggle("hidden");
+
+      }
+    );
+
+
+    themeColor.addEventListener(
+      "input",
+      () => {
+
+        applyTheme(
+          themeColor.value
+        );
+
+      }
+    );
+
+
+    themeReset.addEventListener(
+      "click",
+      () => {
+
+        applyTheme(
+          "#000000"
+        );
+
+      }
+    );
+
+
+    const savedTheme =
+      localStorage.getItem(
+        STORAGE.theme
+      )
+      ||
+      "#000000";
+
+
+    applyTheme(
+      savedTheme
+    );
+
+
+
+    /* ================================================================
+       NAVIGATION
+    ================================================================ */
+
+    const toolTabs =
+      document.querySelectorAll(
+        ".tool-tab"
+      );
+
+    const toolViews =
+      document.querySelectorAll(
+        ".tool-view"
+      );
+
+    let activeTool =
+      "timer";
+
+
+    function switchTool(tool) {
+
+      activeTool = tool;
+
+
+      toolTabs.forEach(
+        tab => {
+
+          tab.classList.toggle(
+            "active",
+            tab.dataset.tool === tool
+          );
+
+        }
+      );
+
+
+      toolViews.forEach(
+        view => {
+
+          view.classList.toggle(
+            "active",
+            view.id === `${tool}-tool`
+          );
+
+        }
+      );
+
+
+      themePanel
+        .classList
+        .add("hidden");
+
+    }
+
+
+    toolTabs.forEach(
+      tab => {
+
+        tab.addEventListener(
+          "click",
+          () => {
+
+            switchTool(
+              tab.dataset.tool
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+
+    /* ================================================================
+       TIMER
+    ================================================================ */
+
+    const timerTool =
+      document.getElementById(
+        "timer-tool"
+      );
+
+    const timerDisplay =
+      document.getElementById(
+        "timer-display"
+      );
+
+    const timerStartPauseBtn =
+      document.getElementById(
+        "timer-start-pause"
+      );
+
+    const timerResetBtn =
+      document.getElementById(
+        "timer-reset"
+      );
+
+    const timerReadingBtn =
+      document.getElementById(
+        "timer-reading"
+      );
+
+
+    let timerDefaultSeconds =
+      5 * 60;
+
+    let timerRemainingSeconds =
+      timerDefaultSeconds;
+
+    let timerRunning =
+      false;
+
+    let timerEndTime =
+      null;
+
+    let timerInterval =
+      null;
+
+
+    function formatTimerTime(seconds) {
+
+      seconds =
+        Math.max(
+          0,
+          Math.ceil(seconds)
+        );
+
+
+      const mins =
+        Math.floor(
+          seconds / 60
+        );
+
+
+      const secs =
+        seconds % 60;
+
+
+      return (
+        String(mins)
+          .padStart(2,"0")
+        +
+        ":"
+        +
+        String(secs)
+          .padStart(2,"0")
+      );
+
+    }
+
+
+    function updateTimerDisplay() {
+
+      const time =
+        formatTimerTime(
+          timerRemainingSeconds
+        );
+
+
+      timerDisplay.textContent =
+        time;
+
+
+      if (
+        activeTool === "timer"
+      ) {
+
+        document.title =
+          `${time} — TIMER`;
+
+      }
+
+    }
+
+
+    function parseTypedTimer() {
+
+      const value =
+        timerDisplay
+          .textContent
+          .trim()
+          .replace(/\s/g,"");
+
+
+      let seconds = 0;
+
+
+      if (
+        value.includes(":")
+      ) {
+
+        const parts =
+          value.split(":");
+
+
+        const minutes =
+          parseInt(
+            parts[0],
+            10
+          )
+          ||
+          0;
+
+
+        const secs =
+          parseInt(
+            parts[1],
+            10
+          )
+          ||
+          0;
+
+
+        seconds =
+          minutes * 60
+          +
+          secs;
+
+      }
+
+      else {
+
+        const minutes =
+          parseFloat(value);
+
+
+        if (
+          !isNaN(minutes)
+        ) {
+
+          seconds =
+            Math.round(
+              minutes * 60
+            );
+
+        }
+
+      }
+
+
+      timerRemainingSeconds =
+        Math.max(
+          0,
+          seconds
+        );
+
+
+      timerDefaultSeconds =
+        timerRemainingSeconds;
+
+
+      updateTimerDisplay();
+
+    }
+
+
+    function stopTimer() {
+
+      timerRunning =
+        false;
+
+
+      clearInterval(
+        timerInterval
+      );
+
+
+      timerInterval =
+        null;
+
+
+      timerStartPauseBtn
+        .textContent =
+        "START";
+
+    }
+
+
+    function finishTimer() {
+
+      stopTimer();
+
+
+      timerRemainingSeconds =
+        0;
+
+
+      updateTimerDisplay();
+
+
+      timerTool
+        .classList
+        .remove("flash");
+
+
+      void timerTool.offsetWidth;
+
+
+      timerTool
+        .classList
+        .add("flash");
+
+    }
+
+
+    function timerTick() {
+
+      if (
+        !timerRunning
+        ||
+        !timerEndTime
+      ) {
+        return;
+      }
+
+
+      timerRemainingSeconds =
+        (
+          timerEndTime
+          -
+          Date.now()
+        )
+        /
+        1000;
+
+
+      if (
+        timerRemainingSeconds <= 0
+      ) {
+
+        finishTimer();
+
+        return;
+
+      }
+
+
+      updateTimerDisplay();
+
+    }
+
+
+    function startTimer() {
+
+      if (
+        document.activeElement
+        ===
+        timerDisplay
+      ) {
+
+        parseTypedTimer();
+
+        timerDisplay.blur();
+
+      }
+
+
+      if (
+        timerRemainingSeconds <= 0
+      ) {
+        return;
+      }
+
+
+      timerRunning =
+        true;
+
+
+      timerEndTime =
+        Date.now()
+        +
+        timerRemainingSeconds * 1000;
+
+
+      timerStartPauseBtn
+        .textContent =
+        "PAUSE";
+
+
+      clearInterval(
+        timerInterval
+      );
+
+
+      timerInterval =
+        setInterval(
+          timerTick,
+          100
+        );
+
+
+      timerTick();
+
+    }
+
+
+    function pauseTimer() {
+
+      if (!timerRunning) {
+        return;
+      }
+
+
+      timerRemainingSeconds =
+        Math.max(
+          0,
+          (
+            timerEndTime
+            -
+            Date.now()
+          )
+          /
+          1000
+        );
+
+
+      stopTimer();
+
+      updateTimerDisplay();
+
+    }
+
+
+    function toggleTimer() {
+
+      if (timerRunning) {
+        pauseTimer();
+      }
+
+      else {
+        startTimer();
+      }
+
+    }
+
+
+    function setTimer(minutes) {
+
+      stopTimer();
+
+
+      timerDefaultSeconds =
+        minutes * 60;
+
+
+      timerRemainingSeconds =
+        timerDefaultSeconds;
+
+
+      timerTool
+        .classList
+        .remove("flash");
+
+
+      updateTimerDisplay();
+
+    }
+
+
+    function resetTimer() {
+
+      stopTimer();
+
+
+      timerRemainingSeconds =
+        timerDefaultSeconds;
+
+
+      timerTool
+        .classList
+        .remove("flash");
+
+
+      updateTimerDisplay();
+
+    }
+
+
+    function startReadingTimer() {
+
+      stopTimer();
+
+
+      const now =
+        new Date();
+
+
+      const readingEnd =
+        new Date();
+
+
+      readingEnd.setHours(
+        14,
+        17,
+        0,
+        0
+      );
+
+
+      const difference =
+        (
+          readingEnd
+          -
+          now
+        )
+        /
+        1000;
+
+
+      timerRemainingSeconds =
+        Math.max(
+          0,
+          difference
+        );
+
+
+      timerDefaultSeconds =
+        timerRemainingSeconds;
+
+
+      updateTimerDisplay();
+
+
+      if (
+        timerRemainingSeconds > 0
+      ) {
+
+        startTimer();
+
+      }
+
+    }
+
+
+    document
+      .querySelectorAll(
+        "[data-timer-minutes]"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              setTimer(
+                Number(
+                  button.dataset
+                    .timerMinutes
+                )
+              );
+
+            }
+          );
+
+        }
+      );
+
+
+    timerReadingBtn
+      .addEventListener(
+        "click",
+        startReadingTimer
+      );
+
+
+    timerStartPauseBtn
+      .addEventListener(
+        "click",
+        toggleTimer
+      );
+
+
+    timerResetBtn
+      .addEventListener(
+        "click",
+        resetTimer
+      );
+
+
+    timerDisplay
+      .addEventListener(
+        "focus",
+        () => {
+
+          if (timerRunning) {
+            pauseTimer();
+          }
+
+
+          const range =
+            document.createRange();
+
+
+          range.selectNodeContents(
+            timerDisplay
+          );
+
+
+          const selection =
+            window.getSelection();
+
+
+          selection.removeAllRanges();
+
+          selection.addRange(
+            range
+          );
+
+        }
+      );
+
+
+    timerDisplay
+      .addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key === "Enter"
+          ) {
+
+            event.preventDefault();
+
+
+            parseTypedTimer();
+
+            timerDisplay.blur();
+
+            startTimer();
+
+          }
+
+        }
+      );
+
+
+    timerDisplay
+      .addEventListener(
+        "blur",
+        () => {
+
+          if (!timerRunning) {
+            parseTypedTimer();
+          }
+
+        }
+      );
+
+
+
+    /* ================================================================
+       NAME PICKER
+    ================================================================ */
+
+    let nameNames =
+      loadArray(
+        STORAGE.nameList
+      );
+
+
+    let nameGentleExclusions =
+      loadArray(
+        STORAGE.gentleList
+      );
+
+
+    let namePool =
+      [...nameNames];
+
+
+    let nameGentleMode =
+      false;
+
+
+    let nameNoRepeats =
+      true;
+
+
+    const nameStage =
+      document.getElementById(
+        "name-main"
+      );
+
+    const nameDisplay =
+      document.getElementById(
+        "name-display"
+      );
+
+    const nameRepeatsIndicator =
+      document.getElementById(
+        "name-repeats-indicator"
+      );
+
+    const nameResetBtn =
+      document.getElementById(
+        "name-reset"
+      );
+
+    const nameEditor =
+      document.getElementById(
+        "name-editor"
+      );
+
+    const nameNamesInput =
+      document.getElementById(
+        "name-names-input"
+      );
+
+    const nameGentleInput =
+      document.getElementById(
+        "name-gentle-input"
+      );
+
+    const nameSaveBtn =
+      document.getElementById(
+        "name-save"
+      );
+
+    const nameGentleIndicator =
+      document.getElementById(
+        "name-gentle-indicator"
+      );
+
+
+    function animateNameFlip() {
+
+      nameDisplay
+        .classList
+        .remove("flip");
+
+
+      void nameDisplay.offsetWidth;
+
+
+      nameDisplay
+        .classList
+        .add("flip");
+
+    }
+
+
+    function pickName() {
+
+      if (!nameNames.length) {
+
+        nameDisplay.textContent =
+          "ADD NAMES WITH E";
+
+        return;
+
+      }
+
+
+      let base =
+        nameNoRepeats
+          ? namePool
+          : nameNames.slice();
+
+
+      if (nameGentleMode) {
+
+        base =
+          base.filter(
+            name =>
+              !nameGentleExclusions
+                .includes(name)
+          );
+
+      }
+
+
+      if (!base.length) {
+
+        nameDisplay.textContent =
+          "RESET TO START AGAIN";
+
+        return;
+
+      }
+
+
+      const randomIndex =
+        Math.floor(
+          Math.random()
+          *
+          base.length
+        );
+
+
+      const chosen =
+        base[randomIndex];
+
+
+      nameDisplay.textContent =
+        chosen;
+
+
+      animateNameFlip();
+
+
+      if (nameNoRepeats) {
+
+        const index =
+          namePool.indexOf(
+            chosen
+          );
+
+
+        if (index !== -1) {
+
+          namePool.splice(
+            index,
+            1
+          );
+
+        }
+
+      }
+
+    }
+
+
+    function resetNamePicker() {
+
+      namePool =
+        [...nameNames];
+
+
+      nameDisplay.textContent =
+        nameNames.length
+          ? "CLICK OR PRESS SPACE"
+          : "ADD NAMES WITH E";
+
+    }
+
+
+    function toggleNameGentle() {
+
+      nameGentleMode =
+        !nameGentleMode;
+
+
+      nameGentleIndicator
+        .classList
+        .toggle(
+          "on",
+          nameGentleMode
+        );
+
+    }
+
+
+    function toggleNameRepeats() {
+
+      nameNoRepeats =
+        !nameNoRepeats;
+
+
+      nameRepeatsIndicator
+        .classList
+        .toggle(
+          "on",
+          !nameNoRepeats
+        );
+
+    }
+
+
+    function toggleNameEditor() {
+
+      nameEditor
+        .classList
+        .toggle("hidden");
+
+
+      if (
+        !nameEditor
+          .classList
+          .contains("hidden")
+      ) {
+
+        nameNamesInput.value =
+          nameNames.join("\n");
+
+
+        nameGentleInput.value =
+          nameGentleExclusions
+            .join("\n");
+
+
+        nameNamesInput.focus();
+
+      }
+
+    }
+
+
+    function saveNameLists() {
+
+      nameNames =
+        nameNamesInput.value
+          .split(/[\n,]/)
+          .map(
+            name =>
+              name.trim()
+          )
+          .filter(Boolean)
+          .map(
+            name =>
+              name.toUpperCase()
+          );
+
+
+      nameGentleExclusions =
+        nameGentleInput.value
+          .split(/[\n,]/)
+          .map(
+            name =>
+              name.trim()
+          )
+          .filter(Boolean)
+          .map(
+            name =>
+              name.toUpperCase()
+          );
+
+
+      saveArray(
+        STORAGE.nameList,
+        nameNames
+      );
+
+
+      saveArray(
+        STORAGE.gentleList,
+        nameGentleExclusions
+      );
+
+
+      resetNamePicker();
+
+
+      nameEditor
+        .classList
+        .add("hidden");
+
+    }
+
+
+    nameStage.addEventListener(
+      "click",
+      pickName
+    );
+
+
+    nameResetBtn.addEventListener(
+      "click",
+      resetNamePicker
+    );
+
+
+    nameSaveBtn.addEventListener(
+      "click",
+      saveNameLists
+    );
+
+
+    resetNamePicker();
+
+
+
+    /* ================================================================
+       GROUP GENERATOR
+    ================================================================ */
+
+    const groupClasses = {
+
+      CLASS1:
+        loadArray(
+          STORAGE.class1
+        ),
+
+      CLASS2:
+        loadArray(
+          STORAGE.class2
+        ),
+
+      CLASS3:
+        loadArray(
+          STORAGE.class3
+        )
+
+    };
+
+
+    const groupStorageKeys = {
+
+      CLASS1:
+        STORAGE.class1,
+
+      CLASS2:
+        STORAGE.class2,
+
+      CLASS3:
+        STORAGE.class3
+
+    };
+
+
+    const groupClassSelect =
+      document.getElementById(
+        "group-class-select"
+      );
+
+    const groupSizeSelect =
+      document.getElementById(
+        "group-size"
+      );
+
+    const groupGenerateBtn =
+      document.getElementById(
+        "group-generate"
+      );
+
+    const groupsContainer =
+      document.getElementById(
+        "groups-container"
+      );
+
+    const groupEditor =
+      document.getElementById(
+        "group-editor"
+      );
+
+    const groupEditorTitle =
+      document.getElementById(
+        "group-editor-title"
+      );
+
+    const groupNamesInput =
+      document.getElementById(
+        "group-names-input"
+      );
+
+    const groupSaveBtn =
+      document.getElementById(
+        "group-save"
+      );
+
+    const groupResetBtn =
+      document.getElementById(
+        "group-reset"
+      );
+
+
+    function getCurrentGroupNames() {
+
+      return groupClasses[
+        groupClassSelect.value
+      ];
+
+    }
+
+
+    function shuffleNames(array) {
+
+      const copy =
+        [...array];
+
+
+      for (
+        let i =
+          copy.length - 1;
+
+        i > 0;
+
+        i--
+      ) {
+
+        const j =
+          Math.floor(
+            Math.random()
+            *
+            (i + 1)
+          );
+
+
+        [
+          copy[i],
+          copy[j]
+        ] =
+        [
+          copy[j],
+          copy[i]
+        ];
+
+      }
+
+
+      return copy;
+
+    }
+
+
+    function generateGroups() {
+
+      const names =
+        getCurrentGroupNames();
+
+
+      if (!names.length) {
+
+        groupsContainer.innerHTML =
+          '<div class="group-placeholder">ADD NAMES WITH E</div>';
+
+        return;
+
+      }
+
+
+      const size =
+        Number(
+          groupSizeSelect.value
+        );
+
+
+      const shuffled =
+        shuffleNames(
+          names
+        );
+
+
+      const numberOfGroups =
+        Math.ceil(
+          shuffled.length
+          /
+          size
+        );
+
+
+      const groups =
+        Array.from(
+          {
+            length:
+              numberOfGroups
+          },
+          () => []
+        );
+
+
+      shuffled.forEach(
+        (name,index) => {
+
+          groups[
+            index %
+            numberOfGroups
+          ].push(
+            name
+          );
+
+        }
+      );
+
+
+      groupsContainer.innerHTML =
+        "";
+
+
+      groups.forEach(
+        (group,index) => {
+
+          const groupEl =
+            document.createElement(
+              "section"
+            );
+
+
+          groupEl.className =
+            "group-card";
+
+
+          const title =
+            document.createElement(
+              "div"
+            );
+
+
+          title.className =
+            "group-title";
+
+
+          title.textContent =
+            `GROUP ${index + 1}`;
+
+
+          const namesWrap =
+            document.createElement(
+              "div"
+            );
+
+
+          namesWrap.className =
+            "group-names";
+
+
+          group.forEach(
+            name => {
+
+              const nameEl =
+                document.createElement(
+                  "div"
+                );
+
+
+              nameEl.className =
+                "group-name";
+
+
+              nameEl.textContent =
+                name;
+
+
+              namesWrap.appendChild(
+                nameEl
+              );
+
+            }
+          );
+
+
+          groupEl.appendChild(
+            title
+          );
+
+
+          groupEl.appendChild(
+            namesWrap
+          );
+
+
+          groupsContainer.appendChild(
+            groupEl
+          );
+
+        }
+      );
+
+    }
+
+
+    function resetGroups() {
+
+      groupsContainer.innerHTML =
+        '<div class="group-placeholder">GENERATE GROUPS</div>';
+
+    }
+
+
+    function toggleGroupEditor() {
+
+      const selectedClass =
+        groupClassSelect.value;
+
+
+      groupEditor
+        .classList
+        .toggle("hidden");
+
+
+      if (
+        !groupEditor
+          .classList
+          .contains("hidden")
+      ) {
+
+        groupEditorTitle.textContent =
+          `${selectedClass.replace(
+            "CLASS",
+            "CLASS "
+          )} LIST`;
+
+
+        groupNamesInput.value =
+          groupClasses[
+            selectedClass
+          ].join("\n");
+
+
+        groupNamesInput.focus();
+
+      }
+
+    }
+
+
+    function saveGroupNames() {
+
+      const selectedClass =
+        groupClassSelect.value;
+
+
+      groupClasses[
+        selectedClass
+      ] =
+        groupNamesInput.value
+          .split(/[\n,]/)
+          .map(
+            name =>
+              name.trim()
+          )
+          .filter(Boolean)
+          .map(
+            name =>
+              name.toUpperCase()
+          );
+
+
+      saveArray(
+        groupStorageKeys[
+          selectedClass
+        ],
+        groupClasses[
+          selectedClass
+        ]
+      );
+
+
+      groupEditor
+        .classList
+        .add("hidden");
+
+
+      resetGroups();
+
+    }
+
+
+    groupClassSelect
+      .addEventListener(
+        "change",
+        () => {
+
+          groupEditor
+            .classList
+            .add("hidden");
+
+
+          resetGroups();
+
+        }
+      );
+
+
+    groupGenerateBtn
+      .addEventListener(
+        "click",
+        generateGroups
+      );
+
+
+    groupResetBtn
+      .addEventListener(
+        "click",
+        resetGroups
+      );
+
+
+    groupSaveBtn
+      .addEventListener(
+        "click",
+        saveGroupNames
+      );
+
+
+
+    /* ================================================================
+       KEYBOARD SHORTCUTS
+    ================================================================ */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        const typing =
+          [
+            "TEXTAREA",
+            "INPUT",
+            "SELECT"
+          ]
+          .includes(
+            event.target.tagName
+          )
+          ||
+          event.target
+            .isContentEditable;
+
+
+        if (typing) {
+          return;
+        }
+
+
+        if (
+          activeTool === "timer"
+        ) {
+
+          if (
+            event.code === "Space"
+          ) {
+
+            event.preventDefault();
+
+            toggleTimer();
+
+          }
+
+
+          if (
+            event.key
+              .toLowerCase()
+            === "r"
+          ) {
+
+            resetTimer();
+
+          }
+
+        }
+
+
+        if (
+          activeTool === "names"
+        ) {
+
+          if (
+            event.code === "Space"
+          ) {
+
+            event.preventDefault();
+
+            pickName();
+
+          }
+
+
+          if (
+            event.key
+              .toLowerCase()
+            === "e"
+          ) {
+
+            toggleNameEditor();
+
+          }
+
+
+          if (
+            event.key
+              .toLowerCase()
+            === "g"
+          ) {
+
+            toggleNameGentle();
+
+          }
+
+
+          if (
+            event.key
+              .toLowerCase()
+            === "n"
+          ) {
+
+            toggleNameRepeats();
+
+          }
+
+
+          if (
+            event.key
+              .toLowerCase()
+            === "r"
+          ) {
+
+            resetNamePicker();
+
+          }
+
+        }
+
+
+        if (
+          activeTool === "groups"
+        ) {
+
+          if (
+            event.code === "Space"
+          ) {
+
+            event.preventDefault();
+
+            generateGroups();
+
+          }
+
+
+          if (
+            event.key
+              .toLowerCase()
+            === "e"
+          ) {
+
+            toggleGroupEditor();
+
+          }
+
+
+          if (
+            event.key
+              .toLowerCase()
+            === "r"
+          ) {
+
+            resetGroups();
+
+          }
+
+        }
+
+      }
+    );
+
+
+    updateTimerDisplay();
+
+  </script>
+
+</body>
+</html>
+```
