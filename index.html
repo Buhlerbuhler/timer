@@ -4,11 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CLOCKED: CLASS TOOLS</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -31,7 +26,7 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: "Inter", Arial, Helvetica, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       overflow: hidden;
       text-transform: uppercase;
     }
@@ -1460,13 +1455,17 @@
           : formatTime(stopwatchElapsed / 1000);
 
       timerStartPause.textContent =
-        (
-          timeMode === "timer"
-            ? timerRunning
-            : stopwatchRunning
-        )
-          ? "PAUSE"
-          : "START";
+        alarmActive
+          ? "STOP"
+          : (
+              (
+                timeMode === "timer"
+                  ? timerRunning
+                  : stopwatchRunning
+              )
+                ? "PAUSE"
+                : "START"
+            );
     }
 
     function pauseTimer() {
@@ -1481,6 +1480,103 @@
       clearInterval(timerInterval);
       timerInterval = null;
       updateTimeDisplay();
+    }
+
+    let audioContext = null;
+    let alarmInterval = null;
+    let alarmActive = false;
+
+    function playAlarmCycle() {
+      try {
+        if (!audioContext) {
+          audioContext =
+            new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        const now = audioContext.currentTime;
+
+        /*
+          Three double-beeps using the softer original tone.
+          The full cycle takes about 1.6 seconds, followed by a rest.
+        */
+        const doubleBeepStarts = [0, 0.62, 1.24];
+
+        doubleBeepStarts.forEach(start => {
+          [
+            { delay: 0, frequency: 880 },
+            { delay: 0.22, frequency: 660 }
+          ].forEach(tone => {
+            const oscillator = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+
+            oscillator.type = "sine";
+            oscillator.frequency.setValueAtTime(
+              tone.frequency,
+              now + start + tone.delay
+            );
+
+            gain.gain.setValueAtTime(
+              0.0001,
+              now + start + tone.delay
+            );
+
+            gain.gain.exponentialRampToValueAtTime(
+              0.22,
+              now + start + tone.delay + 0.015
+            );
+
+            gain.gain.exponentialRampToValueAtTime(
+              0.0001,
+              now + start + tone.delay + 0.16
+            );
+
+            oscillator.connect(gain);
+            gain.connect(audioContext.destination);
+
+            oscillator.start(
+              now + start + tone.delay
+            );
+
+            oscillator.stop(
+              now + start + tone.delay + 0.18
+            );
+          });
+        });
+      } catch {
+        /* visual flash still works if audio is unavailable */
+      }
+    }
+
+    function startAlarm() {
+      stopAlarm();
+
+      alarmActive = true;
+      playAlarmCycle();
+
+      /*
+        Repeat: three double-beeps, rest, three double-beeps, rest...
+      */
+      alarmInterval = setInterval(
+        playAlarmCycle,
+        3000
+      );
+
+      updateTimeDisplay();
+    }
+
+    function stopAlarm() {
+      alarmActive = false;
+
+      if (alarmInterval) {
+        clearInterval(alarmInterval);
+        alarmInterval = null;
+      }
+
+      timerTool?.classList.remove("flash");
+
+      if (typeof updateTimeDisplay === "function") {
+        updateTimeDisplay();
+      }
     }
 
     function startTimer() {
@@ -1508,6 +1604,8 @@
           timerTool.classList.remove("flash");
           void timerTool.offsetWidth;
           timerTool.classList.add("flash");
+
+          startAlarm();
         }
 
         updateTimeDisplay();
@@ -1547,6 +1645,11 @@
     }
 
     function toggleClock() {
+      if (alarmActive) {
+        stopAlarm();
+        return;
+      }
+
       if (timeMode === "timer") {
         timerRunning
           ? pauseTimer()
@@ -1559,6 +1662,7 @@
     }
 
     function resetClock() {
+      stopAlarm();
       timerTool.classList.remove("flash");
 
       if (timeMode === "timer") {
@@ -1577,6 +1681,7 @@
     }
 
     function setTimerMinutes(minutes) {
+      stopAlarm();
       timerRunning = false;
       clearInterval(timerInterval);
       timerInterval = null;
@@ -1589,6 +1694,8 @@
     }
 
     function startCountdownTo() {
+      stopAlarm();
+
       const [hour, minute] =
         timerSettings.countdownTime
           .split(":")
@@ -1807,6 +1914,7 @@
     timerModeToggle.addEventListener(
       "click",
       () => {
+        stopAlarm();
         closeEditor();
 
         if (timeMode === "timer") {
