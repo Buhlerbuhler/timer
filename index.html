@@ -1,8 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>CLASSROOM TOOLS</title>
 
   <style>
@@ -43,7 +45,8 @@
 
     button,
     select,
-    input[type="color"] {
+    input[type="color"],
+    input[type="checkbox"] {
       cursor: pointer;
     }
 
@@ -59,18 +62,21 @@
       top: 1rem;
       left: 1rem;
       z-index: 5000;
+
       display: flex;
-      gap: 0.3rem;
       align-items: center;
+      gap: 0.3rem;
     }
 
     .tool-tab {
       border: 0;
       background: transparent;
       color: var(--text);
+
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.03em;
+
       padding: 0.2rem 0.38rem;
       border-radius: 4px;
     }
@@ -85,6 +91,7 @@
       top: 1rem;
       right: 1rem;
       z-index: 5000;
+
       display: flex;
       align-items: center;
       gap: 0.25rem;
@@ -94,9 +101,11 @@
       border: 0;
       background: transparent;
       color: var(--text);
+
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.03em;
+
       padding: 0.2rem 0.38rem;
       border-radius: 4px;
     }
@@ -104,8 +113,6 @@
     #help-button {
       font-size: 0.9rem;
       line-height: 1;
-      padding-left: 0.3rem;
-      padding-right: 0.3rem;
     }
 
     /* THEME */
@@ -115,12 +122,16 @@
       top: 2.9rem;
       right: 1rem;
       z-index: 5000;
+
       display: flex;
       align-items: center;
       gap: 0.45rem;
+
       padding: 0.4rem;
+
       background: var(--text);
       color: var(--bg);
+
       border-radius: 5px;
     }
 
@@ -136,6 +147,7 @@
     #theme-color {
       width: 26px;
       height: 20px;
+
       padding: 0;
       border: none;
       background: transparent;
@@ -143,10 +155,14 @@
 
     #theme-reset {
       border: none;
+
       padding: 0.15rem 0.3rem;
+
       background: var(--bg);
       color: var(--text);
+
       border-radius: 3px;
+
       font-size: 0.66rem;
       font-weight: 800;
     }
@@ -157,10 +173,13 @@
       position: fixed;
       inset: 0;
       z-index: 10000;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       padding: 1.5rem;
+
       background: rgba(0,0,0,0.6);
       backdrop-filter: blur(5px);
     }
@@ -172,11 +191,15 @@
     .help-card {
       width: min(620px, 100%);
       max-height: 85vh;
+
       overflow: auto;
+
       background: var(--bg);
       color: var(--text);
+
       border: 1px solid var(--line);
       border-radius: 8px;
+
       padding: 1.25rem;
     }
 
@@ -185,11 +208,13 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+
       margin-bottom: 1.25rem;
     }
 
     .help-header h2 {
       margin: 0;
+
       font-size: 0.9rem;
       letter-spacing: 0.08em;
     }
@@ -198,7 +223,9 @@
       border: none;
       background: transparent;
       color: var(--text);
+
       padding: 0.2rem;
+
       font-size: 0.72rem;
       font-weight: 800;
     }
@@ -215,8 +242,10 @@
 
     .help-section h3 {
       margin: 0 0 0.55rem;
+
       font-size: 0.76rem;
       letter-spacing: 0.08em;
+
       color: var(--muted);
     }
 
@@ -224,7 +253,9 @@
       display: grid;
       grid-template-columns: 5.5rem 1fr;
       gap: 0.75rem;
+
       margin: 0.35rem 0;
+
       font-size: 0.8rem;
       line-height: 1.35;
     }
@@ -236,6 +267,7 @@
     .help-copy {
       font-size: 0.8rem;
       line-height: 1.5;
+
       text-transform: none;
     }
 
@@ -243,12 +275,30 @@
 
     .tool-view {
       display: none;
+
       width: 100%;
       height: 100%;
     }
 
     .tool-view.active {
       display: flex;
+    }
+
+    /* SHARED COMPACT CONTROLS */
+
+    .compact-select,
+    .compact-button {
+      border: none;
+
+      background: var(--text);
+      color: var(--bg);
+
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+
+      padding: 0.2rem 0.38rem;
+      border-radius: 4px;
     }
 
     /* TIMER / STOPWATCH */
@@ -263,9 +313,11 @@
       justify-content: center;
       align-items: center;
       gap: 0.4rem;
-      padding: 1.5rem 1rem 0;
       flex-wrap: wrap;
+
       min-height: 2.25rem;
+
+      padding: 1.5rem 1rem 0;
     }
 
     .timer-top.hidden {
@@ -274,21 +326,27 @@
     }
 
     .timer-top button {
-      font-size: 0.78rem;
-      font-weight: 700;
       border: none;
-      border-radius: 4px;
-      padding: 0.22rem 0.42rem;
+
       background: var(--text);
       color: var(--bg);
+
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+
+      padding: 0.2rem 0.38rem;
+      border-radius: 4px;
     }
 
     .timer-wrap {
       flex: 1;
       min-height: 0;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       padding: 1rem;
     }
 
@@ -297,17 +355,22 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
       gap: 1.1rem;
     }
 
     #timer-display {
       font-size: clamp(7rem, 22vw, 20rem);
       font-weight: 800;
+
       line-height: 0.85;
       letter-spacing: 0.02em;
+
       cursor: text;
       user-select: text;
+
       font-variant-numeric: tabular-nums;
+
       outline: none;
       white-space: nowrap;
       text-align: center;
@@ -327,9 +390,16 @@
       border: none;
       background: transparent;
       color: var(--text);
+
       padding: 0.2rem;
+
       font-size: 0.78rem;
       font-weight: 700;
+    }
+
+    #timer-mode-toggle:hover {
+      text-decoration: underline;
+      opacity: 1;
     }
 
     .timer-bottom {
@@ -337,6 +407,7 @@
       justify-content: center;
       align-items: center;
       gap: 0.8rem;
+
       padding: 0 1rem 1.5rem;
     }
 
@@ -344,9 +415,16 @@
       border: none;
       background: transparent;
       color: var(--text);
+
       padding: 0.2rem;
+
       font-size: 0.78rem;
       font-weight: 700;
+    }
+
+    .timer-bottom button:hover {
+      text-decoration: underline;
+      opacity: 1;
     }
 
     #timer-tool.flash {
@@ -360,35 +438,141 @@
       }
     }
 
-    /* SHARED CLASS CONTROLS */
+    /* TIMER EDITOR */
 
-    .class-controls {
+    #timer-editor {
+      border-top: 1px solid var(--soft-line);
+
+      padding: 1rem 2rem;
+
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    #timer-editor.hidden {
+      display: none;
+    }
+
+    .editor-heading {
+      margin: 0 0 1rem;
+
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+    }
+
+    .preset-editor-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 110px;
+
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .editor-field {
+      min-width: 0;
+    }
+
+    .editor-label {
+      display: block;
+
+      margin: 0.25rem 0 0.4rem;
+
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+
+      color: var(--muted);
+    }
+
+    .editor-input {
+      width: 100%;
+
+      border: 1px solid var(--line);
+
+      background: transparent;
+      color: var(--text);
+
+      padding: 0.5rem;
+
+      font-weight: 800;
+    }
+
+    .reading-settings {
+      border-top: 1px solid var(--soft-line);
+
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+
+      margin-bottom: 0.8rem;
+    }
+
+    .checkbox-row input {
+      width: 16px;
+      height: 16px;
+    }
+
+    .checkbox-row label {
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    #timer-reading-time-wrap.hidden {
+      display: none;
+    }
+
+    .editor-save {
+      border: none;
+
+      background: var(--text);
+      color: var(--bg);
+
+      padding: 0.3rem 0.55rem;
+
+      border-radius: 4px;
+
+      font-weight: 800;
+    }
+
+    /* CLASS CONTROLS */
+
+    .class-controls,
+    .group-controls {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 0.45rem;
+
       flex-wrap: wrap;
     }
 
     .class-controls label,
     .group-controls label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
     }
 
     .class-controls select,
-.group-controls select,
-.group-controls button {
-  border: none;
-  background: var(--text);
-  color: var(--bg);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-  padding: 0.2rem 0.38rem;
-  border-radius: 4px;
-}
+    .group-controls select,
+    .group-controls button {
+      border: none;
+
+      background: var(--text);
+      color: var(--bg);
+
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+
+      padding: 0.2rem 0.38rem;
+      border-radius: 4px;
+    }
 
     .class-controls option,
     .group-controls option {
@@ -399,24 +583,30 @@
     /* NAMES */
 
     #names-tool {
-      flex-direction: column;
       position: relative;
+
+      flex-direction: column;
       overflow: hidden;
     }
 
     .names-controls {
-      padding-top: 1.45rem;
       min-height: 3rem;
+      padding-top: 1.45rem;
     }
 
     #name-skip-indicator {
       position: absolute;
       top: 0.72rem;
       left: 50%;
+
       transform: translateX(-50%);
+
       opacity: 0;
+
       font-size: 1.5rem;
+
       transition: opacity 0.25s ease;
+
       pointer-events: none;
     }
 
@@ -426,14 +616,18 @@
 
     #name-main {
       flex: 1;
+      min-height: 0;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       padding: 2rem;
+
       cursor: pointer;
+
       text-align: center;
       perspective: 1000px;
-      min-height: 0;
     }
 
     #name-display {
@@ -444,7 +638,9 @@
 
     #name-repeats-indicator {
       margin-top: 0.6rem;
+
       font-size: 1.6rem;
+
       opacity: 0;
     }
 
@@ -476,7 +672,9 @@
     #name-editor,
     #group-editor {
       border-top: 1px solid var(--soft-line);
+
       padding: 1rem 2rem;
+
       max-height: 65vh;
       overflow-y: auto;
     }
@@ -486,20 +684,18 @@
       display: none;
     }
 
-    .editor-label {
-      display: block;
-      margin: 0.25rem 0 0.5rem;
-      font-size: 0.82rem;
-      font-weight: 800;
-    }
-
     .class-name-input {
       width: 100%;
+
       margin-bottom: 1rem;
+
       border: 1px solid var(--line);
+
       background: transparent;
       color: var(--text);
+
       padding: 0.55rem;
+
       font-weight: 800;
     }
 
@@ -507,21 +703,30 @@
     #group-editor textarea {
       width: 100%;
       min-height: 110px;
+
       margin-bottom: 1rem;
+
       border: 1px solid var(--line);
+
       background: transparent;
       color: var(--text);
+
       padding: 0.75rem;
+
       resize: vertical;
     }
 
     #name-save,
     #group-save {
       border: none;
+
       background: var(--text);
       color: var(--bg);
+
       padding: 0.3rem 0.55rem;
+
       border-radius: 4px;
+
       font-weight: 800;
     }
 
@@ -529,14 +734,17 @@
     .group-footer {
       display: flex;
       justify-content: center;
+
       padding: 0.75rem;
     }
 
     #name-reset,
     #group-reset {
       border: none;
+
       background: transparent;
       color: var(--text);
+
       font-weight: 700;
     }
 
@@ -550,63 +758,73 @@
     #group-main {
       flex: 1;
       min-height: 0;
+
       display: flex;
       flex-direction: column;
-      padding: 1.5rem 1.25rem 0.5rem;
-    }
 
-    .group-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.55rem;
-      flex-wrap: wrap;
+      padding: 1.5rem 1.25rem 0.5rem;
     }
 
     #groups-wrap {
       flex: 1;
       min-height: 0;
-      overflow: auto;
+
       display: flex;
       justify-content: center;
+
+      overflow: auto;
+
       padding-top: 1.5rem;
     }
 
     #groups-container {
       width: min(1100px, 100%);
+
       display: grid;
       grid-template-columns:
         repeat(auto-fit, minmax(180px, 1fr));
+
       gap: 1.5rem;
     }
 
     .group-placeholder {
       grid-column: 1 / -1;
+
+      align-self: center;
+
       text-align: center;
+
       font-size: clamp(1.5rem, 5vw, 4rem);
       font-weight: 900;
+
       padding: 4rem 1rem;
-      align-self: center;
     }
 
     .group-card {
       border-top: 1px solid var(--line);
+
       padding-top: 1rem;
     }
 
     .group-title {
+      margin-bottom: 1rem;
+
       font-size: 0.8rem;
       letter-spacing: 0.12em;
-      margin-bottom: 1rem;
+
       color: var(--muted);
     }
 
     .group-name {
+      margin-bottom: 0.35rem;
+
       font-size: clamp(1.1rem, 2vw, 1.6rem);
       font-weight: 900;
+
       line-height: 1.25;
-      margin-bottom: 0.35rem;
     }
+
+    /* RESPONSIVE */
 
     @media (max-width: 700px) {
       .tool-nav {
@@ -619,12 +837,21 @@
         right: 0.65rem;
       }
 
+      .theme-panel {
+        top: 2.5rem;
+        right: 0.65rem;
+      }
+
       .timer-top {
         padding-top: 3rem;
       }
 
       #timer-display {
         font-size: clamp(5rem, 24vw, 10rem);
+      }
+
+      .preset-editor-grid {
+        grid-template-columns: 1fr;
       }
 
       .names-controls {
@@ -645,130 +872,260 @@
 
 <body>
 
+  <!-- NAVIGATION -->
+
   <nav class="tool-nav">
-    <button class="tool-tab active" data-tool="timer">TIMER</button>
-    <button class="tool-tab" data-tool="names">NAMES</button>
-    <button class="tool-tab" data-tool="groups">GROUPS</button>
+    <button class="tool-tab active" data-tool="timer">
+      TIMER
+    </button>
+
+    <button class="tool-tab" data-tool="names">
+      NAMES
+    </button>
+
+    <button class="tool-tab" data-tool="groups">
+      GROUPS
+    </button>
   </nav>
 
   <div class="utility-nav">
-    <button id="help-button" class="utility-button">ⓘ</button>
-    <button id="theme-button" class="utility-button">THEME</button>
+
+    <button
+      id="help-button"
+      class="utility-button"
+      aria-label="Help"
+      title="Help"
+    >
+      ⓘ
+    </button>
+
+    <button
+      id="theme-button"
+      class="utility-button"
+    >
+      THEME
+    </button>
+
   </div>
 
-  <div id="theme-panel" class="theme-panel hidden">
-    <label for="theme-color">BACKGROUND</label>
-    <input id="theme-color" type="color" value="#000000" />
-    <button id="theme-reset">BLACK</button>
+  <!-- THEME -->
+
+  <div
+    id="theme-panel"
+    class="theme-panel hidden"
+  >
+    <label for="theme-color">
+      BACKGROUND
+    </label>
+
+    <input
+      id="theme-color"
+      type="color"
+      value="#000000"
+    />
+
+    <button id="theme-reset">
+      BLACK
+    </button>
   </div>
 
-  <div id="help-overlay" class="hidden">
+  <!-- HELP -->
+
+  <div
+    id="help-overlay"
+    class="hidden"
+  >
+
     <div class="help-card">
 
       <div class="help-header">
         <h2>HELP</h2>
-        <button id="help-close">CLOSE</button>
+
+        <button id="help-close">
+          CLOSE
+        </button>
       </div>
 
       <section class="help-section">
+
         <h3>TIMER / STOPWATCH</h3>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">SPACE</div>
-          <div>START / PAUSE</div>
+          <div class="shortcut-key">
+            SPACE
+          </div>
+
+          <div>
+            START / PAUSE
+          </div>
         </div>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">R</div>
-          <div>RESET</div>
+          <div class="shortcut-key">
+            R
+          </div>
+
+          <div>
+            RESET
+          </div>
         </div>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">CLICK TIME</div>
-          <div>TYPE A CUSTOM COUNTDOWN TIME</div>
+          <div class="shortcut-key">
+            E
+          </div>
+
+          <div>
+            EDIT TIMER OPTIONS
+          </div>
         </div>
+
+        <div class="shortcut-row">
+          <div class="shortcut-key">
+            CLICK TIME
+          </div>
+
+          <div>
+            TYPE A CUSTOM COUNTDOWN TIME
+          </div>
+        </div>
+
+        <div class="help-copy">
+          Timer presets can be renamed and assigned custom durations. Reading Countdown is optional and can be enabled in the timer settings.
+        </div>
+
       </section>
 
       <section class="help-section">
+
         <h3>NAMES</h3>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">SPACE</div>
-          <div>PICK A NAME</div>
+          <div class="shortcut-key">
+            SPACE
+          </div>
+
+          <div>
+            PICK A NAME
+          </div>
         </div>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">E</div>
-          <div>EDIT SELECTED CLASS</div>
+          <div class="shortcut-key">
+            E
+          </div>
+
+          <div>
+            EDIT SELECTED CLASS
+          </div>
         </div>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">S</div>
-          <div>TOGGLE SKIP LIST</div>
+          <div class="shortcut-key">
+            S
+          </div>
+
+          <div>
+            TOGGLE SKIP LIST
+          </div>
         </div>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">N</div>
-          <div>TOGGLE REPEATS</div>
+          <div class="shortcut-key">
+            N
+          </div>
+
+          <div>
+            TOGGLE REPEATS
+          </div>
         </div>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">R</div>
-          <div>RESET AVAILABLE NAMES</div>
+          <div class="shortcut-key">
+            R
+          </div>
+
+          <div>
+            RESET AVAILABLE NAMES
+          </div>
         </div>
+
       </section>
 
       <section class="help-section">
+
         <h3>CLASSES</h3>
 
         <div class="help-copy">
-          Four classes are included. Press E while using NAMES or GROUPS to edit the selected class. You can change the class name and student list. Both tools share the same class rosters.
+          Four classes are included. Press E while using Names or Groups to edit the selected class. You can change both the class name and student list. Names and Groups share the same rosters.
         </div>
+
       </section>
 
       <section class="help-section">
+
         <h3>SKIP LIST</h3>
 
         <div class="help-copy">
           Each class has its own optional Skip List. Press S to turn it on or off. When active, students on that class's Skip List will not be selected by the random name picker.
         </div>
+
       </section>
 
       <section class="help-section">
+
         <h3>GROUPS</h3>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">SPACE</div>
-          <div>GENERATE GROUPS</div>
+          <div class="shortcut-key">
+            SPACE
+          </div>
+
+          <div>
+            GENERATE GROUPS
+          </div>
         </div>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">E</div>
-          <div>EDIT SELECTED CLASS</div>
+          <div class="shortcut-key">
+            E
+          </div>
+
+          <div>
+            EDIT SELECTED CLASS
+          </div>
         </div>
 
         <div class="shortcut-row">
-          <div class="shortcut-key">R</div>
-          <div>RESET GROUPS</div>
+          <div class="shortcut-key">
+            R
+          </div>
+
+          <div>
+            RESET GROUPS
+          </div>
         </div>
+
       </section>
 
     </div>
+
   </div>
 
   <!-- TIMER -->
 
-  <section id="timer-tool" class="tool-view active">
+  <section
+    id="timer-tool"
+    class="tool-view active"
+  >
 
-    <div id="timer-presets" class="timer-top">
-      <button data-timer-minutes="1">1 MIN</button>
-      <button data-timer-minutes="2">2 MIN</button>
-      <button data-timer-minutes="5">5 MIN</button>
-      <button data-timer-minutes="10">10 MIN</button>
-      <button id="timer-reading">READING</button>
-    </div>
+    <div
+      id="timer-presets"
+      class="timer-top"
+    ></div>
 
     <main class="timer-wrap">
+
       <div class="timer-stage">
 
         <div
@@ -784,41 +1141,135 @@
         </button>
 
       </div>
+
     </main>
 
     <div class="timer-bottom">
-      <button id="timer-start-pause">START</button>
-      <button id="timer-reset">RESET</button>
+
+      <button id="timer-start-pause">
+        START
+      </button>
+
+      <button id="timer-reset">
+        RESET
+      </button>
+
     </div>
+
+    <!-- TIMER SETTINGS -->
+
+    <section
+      id="timer-editor"
+      class="hidden"
+    >
+
+      <h2 class="editor-heading">
+        TIMER OPTIONS
+      </h2>
+
+      <div id="timer-preset-editor"></div>
+
+      <div class="reading-settings">
+
+        <div class="checkbox-row">
+
+          <input
+            id="reading-enabled-input"
+            type="checkbox"
+          />
+
+          <label for="reading-enabled-input">
+            READING COUNTDOWN
+          </label>
+
+        </div>
+
+        <div
+          id="timer-reading-time-wrap"
+          class="hidden"
+        >
+
+          <label
+            class="editor-label"
+            for="reading-time-input"
+          >
+            ENDS AT
+          </label>
+
+          <input
+            id="reading-time-input"
+            class="editor-input"
+            type="time"
+            value="14:17"
+          />
+
+        </div>
+
+      </div>
+
+      <button
+        id="timer-settings-save"
+        class="editor-save"
+      >
+        SAVE
+      </button>
+
+    </section>
 
   </section>
 
   <!-- NAMES -->
 
-  <section id="names-tool" class="tool-view">
+  <section
+    id="names-tool"
+    class="tool-view"
+  >
 
-    <div id="name-skip-indicator">🦅</div>
+    <div
+      id="name-skip-indicator"
+      aria-hidden="true"
+    >
+      🦅
+    </div>
 
     <div class="class-controls names-controls">
-      <label for="name-class-select">CLASS</label>
+
+      <label for="name-class-select">
+        CLASS
+      </label>
+
       <select id="name-class-select"></select>
+
     </div>
 
     <main id="name-main">
+
       <div>
+
         <div id="name-display">
           PRESS E TO EDIT NAMES
         </div>
 
-        <div id="name-repeats-indicator">
+        <div
+          id="name-repeats-indicator"
+          aria-hidden="true"
+        >
           ♾
         </div>
+
       </div>
+
     </main>
 
-    <section id="name-editor" class="hidden">
+    <section
+      id="name-editor"
+      class="hidden"
+    >
 
-      <label class="editor-label" for="name-class-name-input">
+      <label
+        class="editor-label"
+        for="name-class-name-input"
+      >
         CLASS NAME
       </label>
 
@@ -828,13 +1279,19 @@
         type="text"
       />
 
-      <label class="editor-label" for="name-names-input">
+      <label
+        class="editor-label"
+        for="name-names-input"
+      >
         CLASS LIST
       </label>
 
       <textarea id="name-names-input"></textarea>
 
-      <label class="editor-label" for="name-skip-input">
+      <label
+        class="editor-label"
+        for="name-skip-input"
+      >
         SKIP LIST (OPTIONAL)
       </label>
 
@@ -847,14 +1304,21 @@
     </section>
 
     <footer class="name-footer">
-      <button id="name-reset">RESET</button>
+
+      <button id="name-reset">
+        RESET
+      </button>
+
     </footer>
 
   </section>
 
   <!-- GROUPS -->
 
-  <section id="groups-tool" class="tool-view">
+  <section
+    id="groups-tool"
+    class="tool-view"
+  >
 
     <main id="group-main">
 
@@ -887,18 +1351,28 @@
       </div>
 
       <div id="groups-wrap">
+
         <div id="groups-container">
+
           <div class="group-placeholder">
             PRESS E TO EDIT NAMES
           </div>
+
         </div>
+
       </div>
 
     </main>
 
-    <section id="group-editor" class="hidden">
+    <section
+      id="group-editor"
+      class="hidden"
+    >
 
-      <label class="editor-label" for="group-class-name-input">
+      <label
+        class="editor-label"
+        for="group-class-name-input"
+      >
         CLASS NAME
       </label>
 
@@ -908,7 +1382,10 @@
         type="text"
       />
 
-      <label class="editor-label" for="group-names-input">
+      <label
+        class="editor-label"
+        for="group-names-input"
+      >
         CLASS LIST
       </label>
 
@@ -921,16 +1398,31 @@
     </section>
 
     <footer class="group-footer">
-      <button id="group-reset">RESET</button>
+
+      <button id="group-reset">
+        RESET
+      </button>
+
     </footer>
 
   </section>
 
   <script>
+
+    /* STORAGE */
+
     const STORAGE = {
-      classes: "classroomTools_classes_v1",
-      theme: "classroomTools_theme"
+      classes:
+        "classroomTools_classes_v2",
+
+      timerSettings:
+        "classroomTools_timerSettings_v2",
+
+      theme:
+        "classroomTools_theme"
     };
+
+    /* DEFAULT CLASSES */
 
     const DEFAULT_CLASSES = [
       {
@@ -959,15 +1451,52 @@
       }
     ];
 
+    /* DEFAULT TIMER SETTINGS */
+
+    const DEFAULT_TIMER_SETTINGS = {
+      presets: [
+        {
+          label: "1 MIN",
+          minutes: 1
+        },
+        {
+          label: "2 MIN",
+          minutes: 2
+        },
+        {
+          label: "5 MIN",
+          minutes: 5
+        },
+        {
+          label: "10 MIN",
+          minutes: 10
+        }
+      ],
+
+      readingEnabled: false,
+
+      readingTime: "14:17"
+    };
+
+    /* DATA HELPERS */
+
+    function clone(value) {
+      return JSON.parse(
+        JSON.stringify(value)
+      );
+    }
+
     function loadClasses() {
+
       try {
+
         const saved =
           localStorage.getItem(
             STORAGE.classes
           );
 
         if (!saved) {
-          return structuredClone(
+          return clone(
             DEFAULT_CLASSES
           );
         }
@@ -980,7 +1509,7 @@
           ||
           parsed.length !== 4
         ) {
-          return structuredClone(
+          return clone(
             DEFAULT_CLASSES
           );
         }
@@ -1006,38 +1535,134 @@
                 : []
           })
         );
+
       }
 
       catch {
-        return structuredClone(
+        return clone(
           DEFAULT_CLASSES
         );
       }
     }
 
     function saveClasses() {
+
       localStorage.setItem(
         STORAGE.classes,
         JSON.stringify(classes)
       );
+
+    }
+
+    function loadTimerSettings() {
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            STORAGE.timerSettings
+          );
+
+        if (!saved) {
+          return clone(
+            DEFAULT_TIMER_SETTINGS
+          );
+        }
+
+        const parsed =
+          JSON.parse(saved);
+
+        const presets =
+          Array.isArray(parsed.presets)
+            ? parsed.presets
+            : clone(
+                DEFAULT_TIMER_SETTINGS
+                  .presets
+              );
+
+        return {
+          presets:
+            [0,1,2,3].map(
+              index => ({
+                label:
+                  presets[index]?.label
+                  ||
+                  DEFAULT_TIMER_SETTINGS
+                    .presets[index]
+                    .label,
+
+                minutes:
+                  Number(
+                    presets[index]?.minutes
+                  )
+                  ||
+                  DEFAULT_TIMER_SETTINGS
+                    .presets[index]
+                    .minutes
+              })
+            ),
+
+          readingEnabled:
+            Boolean(
+              parsed.readingEnabled
+            ),
+
+          readingTime:
+            typeof parsed.readingTime
+            === "string"
+              ? parsed.readingTime
+              : "14:17"
+        };
+
+      }
+
+      catch {
+        return clone(
+          DEFAULT_TIMER_SETTINGS
+        );
+      }
+    }
+
+    function saveTimerSettings() {
+
+      localStorage.setItem(
+        STORAGE.timerSettings,
+        JSON.stringify(
+          timerSettings
+        )
+      );
+
     }
 
     function parseNames(text) {
+
       return text
         .split(/[\n,]/)
-        .map(name => name.trim())
+        .map(
+          name =>
+            name.trim()
+        )
         .filter(Boolean)
-        .map(name => name.toUpperCase());
+        .map(
+          name =>
+            name.toUpperCase()
+        );
+
     }
 
     let classes =
       loadClasses();
 
+    let timerSettings =
+      loadTimerSettings();
+
     function getClassById(id) {
+
       return classes.find(
         item =>
           item.id === id
       );
+
     }
 
     /* THEME */
@@ -1063,6 +1688,7 @@
       );
 
     function getContrastColor(hex) {
+
       const color =
         hex.replace("#","");
 
@@ -1089,7 +1715,9 @@
           r * 299 +
           g * 587 +
           b * 114
-        ) / 1000;
+        )
+        /
+        1000;
 
       return brightness > 150
         ? "#000000"
@@ -1097,6 +1725,7 @@
     }
 
     function applyTheme(color) {
+
       const text =
         getContrastColor(color);
 
@@ -1148,32 +1777,43 @@
         STORAGE.theme,
         color
       );
+
     }
 
     themeButton.addEventListener(
       "click",
       () => {
+
         themePanel
           .classList
           .toggle("hidden");
+
+        helpOverlay
+          .classList
+          .add("hidden");
+
       }
     );
 
     themeColor.addEventListener(
       "input",
       () => {
+
         applyTheme(
           themeColor.value
         );
+
       }
     );
 
     themeReset.addEventListener(
       "click",
       () => {
+
         applyTheme(
           "#000000"
         );
+
       }
     );
 
@@ -1205,6 +1845,7 @@
     helpButton.addEventListener(
       "click",
       () => {
+
         helpOverlay
           .classList
           .remove("hidden");
@@ -1212,29 +1853,36 @@
         themePanel
           .classList
           .add("hidden");
+
       }
     );
 
     helpClose.addEventListener(
       "click",
       () => {
+
         helpOverlay
           .classList
           .add("hidden");
+
       }
     );
 
     helpOverlay.addEventListener(
       "click",
       event => {
+
         if (
           event.target ===
           helpOverlay
         ) {
+
           helpOverlay
             .classList
             .add("hidden");
+
         }
+
       }
     );
 
@@ -1255,30 +1903,48 @@
 
     toolTabs.forEach(
       tab => {
+
         tab.addEventListener(
           "click",
           () => {
+
             activeTool =
               tab.dataset.tool;
 
             toolTabs.forEach(
-              item =>
+              item => {
+
                 item.classList.toggle(
                   "active",
                   item === tab
-                )
+                );
+
+              }
             );
 
             toolViews.forEach(
-              view =>
+              view => {
+
                 view.classList.toggle(
                   "active",
                   view.id ===
                   `${activeTool}-tool`
-                )
+                );
+
+              }
             );
+
+            themePanel
+              .classList
+              .add("hidden");
+
+            helpOverlay
+              .classList
+              .add("hidden");
+
           }
         );
+
       }
     );
 
@@ -1309,14 +1975,39 @@
         "timer-presets"
       );
 
-    const timerReading =
-      document.getElementById(
-        "timer-reading"
-      );
-
     const timerTool =
       document.getElementById(
         "timer-tool"
+      );
+
+    const timerEditor =
+      document.getElementById(
+        "timer-editor"
+      );
+
+    const timerPresetEditor =
+      document.getElementById(
+        "timer-preset-editor"
+      );
+
+    const readingEnabledInput =
+      document.getElementById(
+        "reading-enabled-input"
+      );
+
+    const readingTimeInput =
+      document.getElementById(
+        "reading-time-input"
+      );
+
+    const readingTimeWrap =
+      document.getElementById(
+        "timer-reading-time-wrap"
+      );
+
+    const timerSettingsSave =
+      document.getElementById(
+        "timer-settings-save"
       );
 
     let timeMode =
@@ -1350,6 +2041,7 @@
       null;
 
     function formatTime(seconds) {
+
       seconds =
         Math.max(
           0,
@@ -1373,9 +2065,11 @@
         String(secs)
           .padStart(2,"0")
       );
+
     }
 
     function updateTimeDisplay() {
+
       timerDisplay.textContent =
         timeMode === "timer"
           ? formatTime(
@@ -1396,9 +2090,11 @@
         )
           ? "PAUSE"
           : "START";
+
     }
 
     function pauseTimer() {
+
       if (!timerRunning) {
         return;
       }
@@ -1409,7 +2105,9 @@
           (
             timerEnd -
             Date.now()
-          ) / 1000
+          )
+          /
+          1000
         );
 
       timerRunning =
@@ -1419,10 +2117,15 @@
         timerInterval
       );
 
+      timerInterval =
+        null;
+
       updateTimeDisplay();
+
     }
 
     function startTimer() {
+
       if (
         timerRemaining <= 0
       ) {
@@ -1435,26 +2138,41 @@
       timerEnd =
         Date.now()
         +
-        timerRemaining * 1000;
+        timerRemaining *
+        1000;
+
+      clearInterval(
+        timerInterval
+      );
 
       timerInterval =
         setInterval(
           () => {
+
             timerRemaining =
               (
                 timerEnd -
                 Date.now()
-              ) / 1000;
+              )
+              /
+              1000;
 
             if (
               timerRemaining <= 0
             ) {
-              timerRemaining = 0;
-              timerRunning = false;
+
+              timerRemaining =
+                0;
+
+              timerRunning =
+                false;
 
               clearInterval(
                 timerInterval
               );
+
+              timerInterval =
+                null;
 
               timerTool
                 .classList
@@ -1465,17 +2183,21 @@
               timerTool
                 .classList
                 .add("flash");
+
             }
 
             updateTimeDisplay();
+
           },
           100
         );
 
       updateTimeDisplay();
+
     }
 
     function startStopwatch() {
+
       stopwatchRunning =
         true;
 
@@ -1484,23 +2206,31 @@
         -
         stopwatchElapsed;
 
+      clearInterval(
+        stopwatchInterval
+      );
+
       stopwatchInterval =
         setInterval(
           () => {
+
             stopwatchElapsed =
               Date.now()
               -
               stopwatchStarted;
 
             updateTimeDisplay();
+
           },
           100
         );
 
       updateTimeDisplay();
+
     }
 
     function pauseStopwatch() {
+
       if (!stopwatchRunning) {
         return;
       }
@@ -1517,26 +2247,37 @@
         stopwatchInterval
       );
 
+      stopwatchInterval =
+        null;
+
       updateTimeDisplay();
+
     }
 
     function toggleClock() {
+
       if (
         timeMode === "timer"
       ) {
+
         timerRunning
           ? pauseTimer()
           : startTimer();
+
       }
 
       else {
+
         stopwatchRunning
           ? pauseStopwatch()
           : startStopwatch();
+
       }
+
     }
 
     function resetClock() {
+
       timerTool
         .classList
         .remove("flash");
@@ -1544,17 +2285,24 @@
       if (
         timeMode === "timer"
       ) {
-        timerRunning = false;
+
+        timerRunning =
+          false;
 
         clearInterval(
           timerInterval
         );
 
+        timerInterval =
+          null;
+
         timerRemaining =
           timerDefault;
+
       }
 
       else {
+
         stopwatchRunning =
           false;
 
@@ -1562,72 +2310,440 @@
           stopwatchInterval
         );
 
+        stopwatchInterval =
+          null;
+
         stopwatchElapsed =
           0;
+
       }
 
       updateTimeDisplay();
+
     }
 
-    document
-      .querySelectorAll(
-        "[data-timer-minutes]"
-      )
-      .forEach(
-        button => {
-          button.addEventListener(
-            "click",
-            () => {
-              timerRunning =
-                false;
+    function setTimerMinutes(minutes) {
 
-              clearInterval(
-                timerInterval
-              );
+      timerRunning =
+        false;
 
-              timerDefault =
-                Number(
-                  button.dataset
-                    .timerMinutes
-                )
-                *
-                60;
-
-              timerRemaining =
-                timerDefault;
-
-              updateTimeDisplay();
-            }
-          );
-        }
+      clearInterval(
+        timerInterval
       );
 
-    timerReading.addEventListener(
-      "click",
-      () => {
-        const end =
-          new Date();
+      timerInterval =
+        null;
 
-        end.setHours(
-          14,
-          17,
-          0,
-          0
+      timerDefault =
+        minutes * 60;
+
+      timerRemaining =
+        timerDefault;
+
+      timerTool
+        .classList
+        .remove("flash");
+
+      updateTimeDisplay();
+
+    }
+
+    function startReadingCountdown() {
+
+      const parts =
+        timerSettings
+          .readingTime
+          .split(":");
+
+      const hour =
+        Number(
+          parts[0]
         );
 
-        timerRemaining =
-          Math.max(
-            0,
-            (
-              end -
-              new Date()
-            ) / 1000
+      const minute =
+        Number(
+          parts[1]
+        );
+
+      const now =
+        new Date();
+
+      const end =
+        new Date();
+
+      end.setHours(
+        hour,
+        minute,
+        0,
+        0
+      );
+
+      timerRunning =
+        false;
+
+      clearInterval(
+        timerInterval
+      );
+
+      timerInterval =
+        null;
+
+      timerRemaining =
+        Math.max(
+          0,
+          (
+            end -
+            now
+          )
+          /
+          1000
+        );
+
+      timerDefault =
+        timerRemaining;
+
+      updateTimeDisplay();
+
+      if (
+        timerRemaining > 0
+      ) {
+        startTimer();
+      }
+
+    }
+
+    function renderTimerButtons() {
+
+      timerPresets.innerHTML =
+        "";
+
+      timerSettings
+        .presets
+        .forEach(
+          preset => {
+
+            const button =
+              document.createElement(
+                "button"
+              );
+
+            button.textContent =
+              preset.label;
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                setTimerMinutes(
+                  preset.minutes
+                );
+
+              }
+            );
+
+            timerPresets
+              .appendChild(
+                button
+              );
+
+          }
+        );
+
+      if (
+        timerSettings
+          .readingEnabled
+      ) {
+
+        const readingButton =
+          document.createElement(
+            "button"
           );
 
-        timerDefault =
-          timerRemaining;
+        readingButton.textContent =
+          "READING";
 
-        startTimer();
+        readingButton.addEventListener(
+          "click",
+          startReadingCountdown
+        );
+
+        timerPresets
+          .appendChild(
+            readingButton
+          );
+
+      }
+
+    }
+
+    function buildTimerEditor() {
+
+      timerPresetEditor.innerHTML =
+        "";
+
+      timerSettings
+        .presets
+        .forEach(
+          (preset,index) => {
+
+            const grid =
+              document.createElement(
+                "div"
+              );
+
+            grid.className =
+              "preset-editor-grid";
+
+            const labelField =
+              document.createElement(
+                "div"
+              );
+
+            labelField.className =
+              "editor-field";
+
+            const label =
+              document.createElement(
+                "label"
+              );
+
+            label.className =
+              "editor-label";
+
+            label.textContent =
+              `BUTTON ${index + 1} LABEL`;
+
+            const labelInput =
+              document.createElement(
+                "input"
+              );
+
+            labelInput.type =
+              "text";
+
+            labelInput.className =
+              "editor-input preset-label-input";
+
+            labelInput.value =
+              preset.label;
+
+            labelInput.dataset.index =
+              index;
+
+            labelField.appendChild(
+              label
+            );
+
+            labelField.appendChild(
+              labelInput
+            );
+
+            const minutesField =
+              document.createElement(
+                "div"
+              );
+
+            minutesField.className =
+              "editor-field";
+
+            const minutesLabel =
+              document.createElement(
+                "label"
+              );
+
+            minutesLabel.className =
+              "editor-label";
+
+            minutesLabel.textContent =
+              "MINUTES";
+
+            const minutesInput =
+              document.createElement(
+                "input"
+              );
+
+            minutesInput.type =
+              "number";
+
+            minutesInput.min =
+              "0.1";
+
+            minutesInput.step =
+              "0.1";
+
+            minutesInput.className =
+              "editor-input preset-minutes-input";
+
+            minutesInput.value =
+              preset.minutes;
+
+            minutesInput.dataset.index =
+              index;
+
+            minutesField.appendChild(
+              minutesLabel
+            );
+
+            minutesField.appendChild(
+              minutesInput
+            );
+
+            grid.appendChild(
+              labelField
+            );
+
+            grid.appendChild(
+              minutesField
+            );
+
+            timerPresetEditor
+              .appendChild(
+                grid
+              );
+
+          }
+        );
+
+      readingEnabledInput.checked =
+        timerSettings
+          .readingEnabled;
+
+      readingTimeInput.value =
+        timerSettings
+          .readingTime;
+
+      readingTimeWrap
+        .classList
+        .toggle(
+          "hidden",
+          !readingEnabledInput
+            .checked
+        );
+
+    }
+
+    function toggleTimerEditor() {
+
+      timerEditor
+        .classList
+        .toggle("hidden");
+
+      if (
+        !timerEditor
+          .classList
+          .contains("hidden")
+      ) {
+
+        if (
+          timerRunning
+        ) {
+          pauseTimer();
+        }
+
+        if (
+          stopwatchRunning
+        ) {
+          pauseStopwatch();
+        }
+
+        buildTimerEditor();
+
+      }
+
+    }
+
+    readingEnabledInput.addEventListener(
+      "change",
+      () => {
+
+        readingTimeWrap
+          .classList
+          .toggle(
+            "hidden",
+            !readingEnabledInput
+              .checked
+          );
+
+      }
+    );
+
+    timerSettingsSave.addEventListener(
+      "click",
+      () => {
+
+        const labelInputs =
+          timerPresetEditor
+            .querySelectorAll(
+              ".preset-label-input"
+            );
+
+        const minuteInputs =
+          timerPresetEditor
+            .querySelectorAll(
+              ".preset-minutes-input"
+            );
+
+        const newPresets =
+          [];
+
+        for (
+          let i = 0;
+          i < 4;
+          i++
+        ) {
+
+          const label =
+            labelInputs[i]
+              .value
+              .trim()
+              .toUpperCase()
+            ||
+            `TIMER ${i + 1}`;
+
+          let minutes =
+            parseFloat(
+              minuteInputs[i]
+                .value
+            );
+
+          if (
+            !Number.isFinite(minutes)
+            ||
+            minutes <= 0
+          ) {
+            minutes =
+              1;
+          }
+
+          newPresets.push({
+            label,
+            minutes
+          });
+
+        }
+
+        timerSettings.presets =
+          newPresets;
+
+        timerSettings
+          .readingEnabled =
+          readingEnabledInput
+            .checked;
+
+        timerSettings
+          .readingTime =
+          readingTimeInput.value
+          ||
+          "14:17";
+
+        saveTimerSettings();
+
+        renderTimerButtons();
+
+        timerEditor
+          .classList
+          .add("hidden");
+
       }
     );
 
@@ -1644,57 +2760,76 @@
     timerModeToggle.addEventListener(
       "click",
       () => {
+
+        timerEditor
+          .classList
+          .add("hidden");
+
         if (
           timeMode === "timer"
         ) {
+
           pauseTimer();
 
           timeMode =
             "stopwatch";
 
-          timerModeToggle.textContent =
+          timerModeToggle
+            .textContent =
             "TIMER";
 
           timerPresets
             .classList
             .add("hidden");
 
-          timerDisplay.contentEditable =
-            "false";
+          timerDisplay
+            .setAttribute(
+              "contenteditable",
+              "false"
+            );
 
           timerDisplay
             .classList
             .add("stopwatch");
+
         }
 
         else {
+
           pauseStopwatch();
 
           timeMode =
             "timer";
 
-          timerModeToggle.textContent =
+          timerModeToggle
+            .textContent =
             "STOPWATCH";
 
           timerPresets
             .classList
             .remove("hidden");
 
-          timerDisplay.contentEditable =
-            "true";
+          timerDisplay
+            .setAttribute(
+              "contenteditable",
+              "true"
+            );
 
           timerDisplay
             .classList
             .remove("stopwatch");
+
         }
 
         updateTimeDisplay();
+
       }
     );
 
     timerDisplay.addEventListener(
       "focus",
       () => {
+
         if (
           timeMode !== "timer"
         ) {
@@ -1714,13 +2849,19 @@
           window.getSelection();
 
         selection.removeAllRanges();
-        selection.addRange(range);
+
+        selection.addRange(
+          range
+        );
+
       }
     );
 
     function parseTypedTimer() {
+
       const value =
-        timerDisplay.textContent
+        timerDisplay
+          .textContent
           .trim();
 
       let seconds =
@@ -1729,6 +2870,7 @@
       if (
         value.includes(":")
       ) {
+
         const parts =
           value.split(":");
 
@@ -1752,9 +2894,11 @@
             ||
             0
           );
+
       }
 
       else {
+
         seconds =
           (
             parseFloat(value)
@@ -1763,6 +2907,7 @@
           )
           *
           60;
+
       }
 
       timerDefault =
@@ -1775,35 +2920,70 @@
         timerDefault;
 
       updateTimeDisplay();
+
     }
 
     timerDisplay.addEventListener(
       "keydown",
       event => {
+
         if (
           event.key === "Enter"
         ) {
+
           event.preventDefault();
 
           parseTypedTimer();
+
           timerDisplay.blur();
+
           startTimer();
+
         }
+
+      }
+    );
+
+    timerDisplay.addEventListener(
+      "beforeinput",
+      event => {
+
+        if (
+          event.inputType ===
+            "insertText"
+          &&
+          event.data
+          &&
+          !/^[0-9:.]+$/.test(
+            event.data
+          )
+        ) {
+
+          event.preventDefault();
+
+        }
+
       }
     );
 
     timerDisplay.addEventListener(
       "blur",
       () => {
+
         if (
           timeMode === "timer"
           &&
           !timerRunning
         ) {
+
           parseTypedTimer();
+
         }
+
       }
     );
+
+    renderTimerButtons();
 
     /* CLASS SELECTORS */
 
@@ -1818,6 +2998,7 @@
       );
 
     function rebuildClassDropdowns() {
+
       const selectedName =
         nameClassSelect.value
         ||
@@ -1836,6 +3017,7 @@
 
       classes.forEach(
         item => {
+
           const nameOption =
             document.createElement(
               "option"
@@ -1847,9 +3029,10 @@
           nameOption.textContent =
             item.name;
 
-          nameClassSelect.appendChild(
-            nameOption
-          );
+          nameClassSelect
+            .appendChild(
+              nameOption
+            );
 
           const groupOption =
             document.createElement(
@@ -1862,21 +3045,28 @@
           groupOption.textContent =
             item.name;
 
-          groupClassSelect.appendChild(
-            groupOption
-          );
+          groupClassSelect
+            .appendChild(
+              groupOption
+            );
+
         }
       );
 
       nameClassSelect.value =
-        getClassById(selectedName)
+        getClassById(
+          selectedName
+        )
           ? selectedName
           : classes[0].id;
 
       groupClassSelect.value =
-        getClassById(selectedGroup)
+        getClassById(
+          selectedGroup
+        )
           ? selectedGroup
           : classes[0].id;
+
     }
 
     rebuildClassDropdowns();
@@ -1943,12 +3133,15 @@
       true;
 
     function currentNameClass() {
+
       return getClassById(
         nameClassSelect.value
       );
+
     }
 
     function resetNames() {
+
       const selected =
         currentNameClass();
 
@@ -1959,9 +3152,11 @@
         selected.roster.length
           ? "CLICK OR PRESS SPACE"
           : "PRESS E TO EDIT NAMES";
+
     }
 
     function pickName() {
+
       const selected =
         currentNameClass();
 
@@ -1973,30 +3168,36 @@
       if (
         skipMode
       ) {
+
         options =
           options.filter(
             name =>
               !selected.skip
                 .includes(name)
           );
+
       }
 
       if (
         !selected.roster.length
       ) {
+
         nameDisplay.textContent =
           "PRESS E TO EDIT NAMES";
 
         return;
+
       }
 
       if (
         !options.length
       ) {
+
         nameDisplay.textContent =
           "RESET TO START AGAIN";
 
         return;
+
       }
 
       const chosen =
@@ -2024,6 +3225,7 @@
       if (
         noRepeats
       ) {
+
         const index =
           namePool.indexOf(
             chosen
@@ -2032,15 +3234,20 @@
         if (
           index !== -1
         ) {
+
           namePool.splice(
             index,
             1
           );
+
         }
+
       }
+
     }
 
     function toggleNameEditor() {
+
       const selected =
         currentNameClass();
 
@@ -2053,28 +3260,38 @@
           .classList
           .contains("hidden")
       ) {
+
         nameClassNameInput.value =
           selected.name;
 
         nameNamesInput.value =
-          selected.roster.join("\n");
+          selected.roster
+            .join("\n");
 
         nameSkipInput.value =
-          selected.skip.join("\n");
+          selected.skip
+            .join("\n");
 
-        nameClassNameInput.focus();
-        nameClassNameInput.select();
+        nameClassNameInput
+          .focus();
+
+        nameClassNameInput
+          .select();
+
       }
+
     }
 
     nameSave.addEventListener(
       "click",
       () => {
+
         const selected =
           currentNameClass();
 
         selected.name =
-          nameClassNameInput.value
+          nameClassNameInput
+            .value
             .trim()
             .toUpperCase()
           ||
@@ -2102,7 +3319,9 @@
           .add("hidden");
 
         resetNames();
+
         resetGroups();
+
       }
     );
 
@@ -2119,11 +3338,13 @@
     nameClassSelect.addEventListener(
       "change",
       () => {
+
         nameEditor
           .classList
           .add("hidden");
 
         resetNames();
+
       }
     );
 
@@ -2172,12 +3393,15 @@
       );
 
     function currentGroupClass() {
+
       return getClassById(
         groupClassSelect.value
       );
+
     }
 
     function shuffle(array) {
+
       const copy =
         [...array];
 
@@ -2189,6 +3413,7 @@
 
         i--
       ) {
+
         const j =
           Math.floor(
             Math.random()
@@ -2204,22 +3429,27 @@
           copy[j],
           copy[i]
         ];
+
       }
 
       return copy;
+
     }
 
     function generateGroups() {
+
       const selected =
         currentGroupClass();
 
       if (
         !selected.roster.length
       ) {
+
         groupsContainer.innerHTML =
           '<div class="group-placeholder">PRESS E TO EDIT NAMES</div>';
 
         return;
+
       }
 
       const size =
@@ -2234,7 +3464,8 @@
 
       const numberOfGroups =
         Math.ceil(
-          shuffled.length /
+          shuffled.length
+          /
           size
         );
 
@@ -2249,10 +3480,14 @@
 
       shuffled.forEach(
         (name,index) => {
+
           groups[
             index %
             numberOfGroups
-          ].push(name);
+          ].push(
+            name
+          );
+
         }
       );
 
@@ -2261,6 +3496,7 @@
 
       groups.forEach(
         (group,index) => {
+
           const card =
             document.createElement(
               "section"
@@ -2280,10 +3516,13 @@
           title.textContent =
             `GROUP ${index + 1}`;
 
-          card.appendChild(title);
+          card.appendChild(
+            title
+          );
 
           group.forEach(
             name => {
+
               const item =
                 document.createElement(
                   "div"
@@ -2295,18 +3534,25 @@
               item.textContent =
                 name;
 
-              card.appendChild(item);
+              card.appendChild(
+                item
+              );
+
             }
           );
 
-          groupsContainer.appendChild(
-            card
-          );
+          groupsContainer
+            .appendChild(
+              card
+            );
+
         }
       );
+
     }
 
     function resetGroups() {
+
       const selected =
         currentGroupClass();
 
@@ -2314,9 +3560,11 @@
         selected.roster.length
           ? '<div class="group-placeholder">GENERATE GROUPS</div>'
           : '<div class="group-placeholder">PRESS E TO EDIT NAMES</div>';
+
     }
 
     function toggleGroupEditor() {
+
       const selected =
         currentGroupClass();
 
@@ -2329,25 +3577,34 @@
           .classList
           .contains("hidden")
       ) {
+
         groupClassNameInput.value =
           selected.name;
 
         groupNamesInput.value =
-          selected.roster.join("\n");
+          selected.roster
+            .join("\n");
 
-        groupClassNameInput.focus();
-        groupClassNameInput.select();
+        groupClassNameInput
+          .focus();
+
+        groupClassNameInput
+          .select();
+
       }
+
     }
 
     groupSave.addEventListener(
       "click",
       () => {
+
         const selected =
           currentGroupClass();
 
         selected.name =
-          groupClassNameInput.value
+          groupClassNameInput
+            .value
             .trim()
             .toUpperCase()
           ||
@@ -2372,11 +3629,14 @@
         resetGroups();
 
         if (
-          nameClassSelect.value ===
-          selected.id
+          nameClassSelect.value
+          === selected.id
         ) {
+
           resetNames();
+
         }
+
       }
     );
 
@@ -2393,11 +3653,13 @@
     groupClassSelect.addEventListener(
       "change",
       () => {
+
         groupEditor
           .classList
           .add("hidden");
 
         resetGroups();
+
       }
     );
 
@@ -2412,6 +3674,7 @@
         if (
           event.key === "Escape"
         ) {
+
           helpOverlay
             .classList
             .add("hidden");
@@ -2419,6 +3682,19 @@
           themePanel
             .classList
             .add("hidden");
+
+          timerEditor
+            .classList
+            .add("hidden");
+
+          nameEditor
+            .classList
+            .add("hidden");
+
+          groupEditor
+            .classList
+            .add("hidden");
+
         }
 
         if (
@@ -2434,58 +3710,92 @@
             "TEXTAREA",
             "INPUT",
             "SELECT"
-          ].includes(
+          ]
+          .includes(
             event.target.tagName
           )
           ||
           event.target
             .isContentEditable;
 
-        if (typing) {
+        if (
+          typing
+        ) {
           return;
         }
 
         const key =
-          event.key.toLowerCase();
+          event.key
+            .toLowerCase();
+
+        /* TIMER */
 
         if (
           activeTool === "timer"
         ) {
+
           if (
             event.code === "Space"
           ) {
+
             event.preventDefault();
+
             toggleClock();
+
           }
 
           if (
             key === "r"
           ) {
-            event.preventDefault();
-            resetClock();
-          }
-        }
 
-        if (
-          activeTool === "names"
-        ) {
-          if (
-            event.code === "Space"
-          ) {
             event.preventDefault();
-            pickName();
+
+            resetClock();
+
           }
 
           if (
             key === "e"
           ) {
+
             event.preventDefault();
+
+            toggleTimerEditor();
+
+          }
+
+        }
+
+        /* NAMES */
+
+        if (
+          activeTool === "names"
+        ) {
+
+          if (
+            event.code === "Space"
+          ) {
+
+            event.preventDefault();
+
+            pickName();
+
+          }
+
+          if (
+            key === "e"
+          ) {
+
+            event.preventDefault();
+
             toggleNameEditor();
+
           }
 
           if (
             key === "s"
           ) {
+
             event.preventDefault();
 
             skipMode =
@@ -2497,11 +3807,13 @@
                 "on",
                 skipMode
               );
+
           }
 
           if (
             key === "n"
           ) {
+
             event.preventDefault();
 
             noRepeats =
@@ -2513,39 +3825,57 @@
                 "on",
                 !noRepeats
               );
+
           }
 
           if (
             key === "r"
           ) {
+
             event.preventDefault();
+
             resetNames();
+
           }
+
         }
+
+        /* GROUPS */
 
         if (
           activeTool === "groups"
         ) {
+
           if (
             event.code === "Space"
           ) {
+
             event.preventDefault();
+
             generateGroups();
+
           }
 
           if (
             key === "e"
           ) {
+
             event.preventDefault();
+
             toggleGroupEditor();
+
           }
 
           if (
             key === "r"
           ) {
+
             event.preventDefault();
+
             resetGroups();
+
           }
+
         }
 
       }
