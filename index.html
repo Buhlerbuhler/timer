@@ -7,7 +7,7 @@
 
   <style>
     :root {
-      --bg: #000000;
+      --bg: #fed500;
       --text: #ffffff;
       --muted: rgba(255,255,255,0.6);
       --line: rgba(255,255,255,0.35);
@@ -700,7 +700,7 @@
 <body>
 
   <div class="brand-mark">
-    <div class="brand-name">CLOCKED</div>
+    <div class="brand-name">CLOCKED </div>
     <div class="brand-url">CLASS TOOLS</div>
   </div>
 
@@ -743,11 +743,11 @@
     <input
       id="theme-color"
       type="color"
-      value="#000000"
+      value="#fed500"
     />
 
     <button id="theme-reset">
-      BLACK
+      DEFAULT
     </button>
   </div>
 
@@ -906,30 +906,46 @@
           <div class="checkbox-row">
 
             <input
-              id="reading-enabled-input"
+              id="countdown-enabled-input"
               type="checkbox"
             />
 
-            <label for="reading-enabled-input">
-              READING COUNTDOWN
+            <label for="countdown-enabled-input">
+              COUNTDOWN TO
             </label>
 
           </div>
 
           <div
-            id="reading-time-wrap"
+            id="countdown-options-wrap"
             class="hidden"
           >
 
             <label
               class="editor-label"
-              for="reading-time-input"
+              for="countdown-label-input"
+            >
+              BUTTON LABEL
+            </label>
+
+            <input
+              id="countdown-label-input"
+              class="editor-input"
+              type="text"
+              value="COUNTDOWN"
+              placeholder="COUNTDOWN"
+            />
+
+            <label
+              class="editor-label"
+              for="countdown-time-input"
+              style="margin-top:1rem;"
             >
               ENDS AT
             </label>
 
             <input
-              id="reading-time-input"
+              id="countdown-time-input"
               class="editor-input"
               type="time"
               value="14:17"
@@ -1234,9 +1250,11 @@
         }
       ],
 
-      readingEnabled: false,
+      countdownEnabled: false,
 
-      readingTime: "14:17"
+      countdownLabel: "COUNTDOWN",
+
+      countdownTime: "14:17"
     };
 
     function clone(value) {
@@ -1363,16 +1381,33 @@
               })
             ),
 
-          readingEnabled:
+          countdownEnabled:
             Boolean(
+              parsed.countdownEnabled
+              ??
               parsed.readingEnabled
             ),
 
-          readingTime:
-            typeof parsed.readingTime
+          countdownLabel:
+            typeof parsed.countdownLabel
             === "string"
-              ? parsed.readingTime
-              : "14:17"
+              ? parsed.countdownLabel
+              : (
+                  parsed.readingEnabled
+                    ? "READING"
+                    : "COUNTDOWN"
+                ),
+
+          countdownTime:
+            typeof parsed.countdownTime
+            === "string"
+              ? parsed.countdownTime
+              : (
+                  typeof parsed.readingTime
+                  === "string"
+                    ? parsed.readingTime
+                    : "14:17"
+                )
         };
 
       }
@@ -1705,7 +1740,7 @@
       () => {
 
         applyTheme(
-          "#000000"
+          "#fed500"
         );
 
       }
@@ -1716,7 +1751,7 @@
         STORAGE.theme
       )
       ||
-      "#000000"
+      "#fed500"
     );
 
     /* NAV */
@@ -1820,19 +1855,24 @@
         "timer-preset-editor"
       );
 
-    const readingEnabledInput =
+    const countdownEnabledInput =
       document.getElementById(
-        "reading-enabled-input"
+        "countdown-enabled-input"
       );
 
-    const readingTimeWrap =
+    const countdownOptionsWrap =
       document.getElementById(
-        "reading-time-wrap"
+        "countdown-options-wrap"
       );
 
-    const readingTimeInput =
+    const countdownLabelInput =
       document.getElementById(
-        "reading-time-input"
+        "countdown-label-input"
+      );
+
+    const countdownTimeInput =
+      document.getElementById(
+        "countdown-time-input"
       );
 
     const timerEditorSave =
@@ -2179,14 +2219,14 @@
 
     }
 
-    function startReadingCountdown() {
+    function startCountdownTo() {
 
       const [
         hour,
         minute
       ] =
         timerSettings
-          .readingTime
+          .countdownTime
           .split(":")
           .map(Number);
 
@@ -2276,25 +2316,27 @@
 
       if (
         timerSettings
-          .readingEnabled
+          .countdownEnabled
       ) {
 
-        const reading =
+        const countdown =
           document.createElement(
             "button"
           );
 
-        reading.textContent =
-          "READING";
+        countdown.textContent =
+          timerSettings.countdownLabel
+          ||
+          "COUNTDOWN";
 
-        reading.addEventListener(
+        countdown.addEventListener(
           "click",
-          startReadingCountdown
+          startCountdownTo
         );
 
         timerPresets
           .appendChild(
-            reading
+            countdown
           );
 
       }
@@ -2417,19 +2459,25 @@
           }
         );
 
-      readingEnabledInput.checked =
+      countdownEnabledInput.checked =
         timerSettings
-          .readingEnabled;
+          .countdownEnabled;
 
-      readingTimeInput.value =
+      countdownLabelInput.value =
         timerSettings
-          .readingTime;
+          .countdownLabel
+        ||
+        "COUNTDOWN";
 
-      readingTimeWrap
+      countdownTimeInput.value =
+        timerSettings
+          .countdownTime;
+
+      countdownOptionsWrap
         .classList
         .toggle(
           "hidden",
-          !readingEnabledInput
+          !countdownEnabledInput
             .checked
         );
 
@@ -2466,15 +2514,15 @@
 
     }
 
-    readingEnabledInput.addEventListener(
+    countdownEnabledInput.addEventListener(
       "change",
       () => {
 
-        readingTimeWrap
+        countdownOptionsWrap
           .classList
           .toggle(
             "hidden",
-            !readingEnabledInput
+            !countdownEnabledInput
               .checked
           );
 
@@ -2539,12 +2587,19 @@
         timerSettings.presets =
           presets;
 
-        timerSettings.readingEnabled =
-          readingEnabledInput
+        timerSettings.countdownEnabled =
+          countdownEnabledInput
             .checked;
 
-        timerSettings.readingTime =
-          readingTimeInput.value
+        timerSettings.countdownLabel =
+          countdownLabelInput.value
+            .trim()
+            .toUpperCase()
+          ||
+          "COUNTDOWN";
+
+        timerSettings.countdownTime =
+          countdownTimeInput.value
           ||
           "14:17";
 
