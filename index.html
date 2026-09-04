@@ -514,6 +514,10 @@
       line-height: 1;
     }
 
+    #name-display.small-placeholder {
+      font-size: clamp(1.5rem, 5vw, 4rem);
+    }
+
     #name-repeats-indicator {
       margin-top: .6rem;
       font-size: 1.6rem;
@@ -717,6 +721,10 @@
         line-height: .95;
         max-width: 100%;
         overflow-wrap: anywhere;
+      }
+
+      #name-display.small-placeholder {
+        font-size: clamp(1.4rem, 8vw, 2.6rem);
       }
 
       #name-repeats-indicator {
@@ -2239,16 +2247,19 @@
       const selected =
         currentNameClass();
 
-      if (
+      const needsNames =
         !selected ||
-        selected.roster.length === 0
-      ) {
-        nameDisplay.textContent =
-          "PRESS E TO EDIT NAMES";
-      } else {
-        nameDisplay.textContent =
-          "CLICK OR PRESS SPACE";
-      }
+        selected.roster.length === 0;
+
+      nameDisplay.classList.toggle(
+        "small-placeholder",
+        needsNames
+      );
+
+      nameDisplay.textContent =
+        needsNames
+          ? "PRESS E TO EDIT NAMES"
+          : "CLICK OR PRESS SPACE";
     }
 
     function resetNamePool() {
@@ -2277,10 +2288,13 @@
         !selected ||
         selected.roster.length === 0
       ) {
+        nameDisplay.classList.add("small-placeholder");
         nameDisplay.textContent =
           "PRESS E TO EDIT NAMES";
         return;
       }
+
+      nameDisplay.classList.remove("small-placeholder");
 
       let base =
         noRepeats
