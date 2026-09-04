@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -150,6 +149,31 @@
       font-size: 0.66rem;
       font-weight: 800;
     }
+
+#brand
+.brand-mark {
+  position: fixed;
+  left: 1rem;
+  bottom: 0.8rem;
+  z-index: 4000;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.brand-name {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.brand-url {
+  margin-top: 0.18rem;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0.45;
+}
+```
 
     /* SHARED OVERLAYS */
 
@@ -673,6 +697,8 @@
   </style>
 </head>
 
+<div class="brand-mark"> <div class="brand-name">CLOCKED</div> <div class="brand-url">CLOCK-ED.CA</div> </div>
+  
 <body>
 
   <!-- NAV -->
