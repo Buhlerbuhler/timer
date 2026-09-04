@@ -485,17 +485,16 @@
     }
 
     #name-skip-indicator {
-      position: absolute;
-      top: .72rem;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-      font-size: 1.5rem;
-      transition: opacity .25s ease;
+      display: none;
+      font-size: .95rem;
+      line-height: 1;
+      opacity: .95;
       pointer-events: none;
     }
 
-    #name-skip-indicator.on { opacity: .9; }
+    #name-skip-indicator.on {
+      display: inline-block;
+    }
 
     #name-main {
       flex: 1;
@@ -609,48 +608,246 @@
     }
 
     @media (max-width: 700px) {
+      body {
+        overflow: hidden;
+      }
+
       .tool-nav {
-        top: .65rem;
-        left: .65rem;
+        top: .6rem;
+        left: .6rem;
+        right: .6rem;
+        justify-content: flex-start;
+        gap: .2rem;
+        flex-wrap: wrap;
+        max-width: calc(100% - 6.8rem);
       }
 
       .utility-nav {
-        top: .65rem;
-        right: .65rem;
+        top: .6rem;
+        right: .6rem;
+        gap: .15rem;
+      }
+
+      .tool-tab,
+      .utility-button {
+        font-size: .68rem;
+        padding: .18rem .32rem;
+      }
+
+      #help-button {
+        font-size: .84rem;
+      }
+
+      #name-skip-indicator {
+        font-size: .88rem;
       }
 
       .theme-panel {
-        top: 2.5rem;
-        right: .65rem;
+        top: 2.35rem;
+        right: .6rem;
+        max-width: calc(100vw - 1.2rem);
       }
 
-      .timer-top { padding-top: 3rem; }
+      .timer-top {
+        min-height: 2rem;
+        padding: 2.7rem .65rem 0;
+        gap: .28rem;
+      }
+
+      .timer-top button {
+        font-size: .66rem;
+        padding: .18rem .32rem;
+      }
+
+      .timer-wrap {
+        padding: .5rem .6rem;
+      }
+
+      .timer-stage {
+        gap: .65rem;
+      }
 
       #timer-display {
-        font-size: clamp(5rem, 24vw, 10rem);
+        font-size: clamp(4.8rem, 25vw, 9rem);
+        line-height: .88;
+        max-width: 100%;
       }
 
-      .names-controls { padding-top: 3rem; }
+      #timer-mode-toggle {
+        font-size: .72rem;
+      }
+
+      .timer-bottom {
+        gap: .65rem;
+        padding: 0 .6rem 1rem;
+      }
+
+      .timer-bottom button {
+        font-size: .72rem;
+      }
+
+      .names-controls {
+        min-height: 2.5rem;
+        padding-top: 2.7rem;
+      }
+
+      .class-controls,
+      .group-controls {
+        gap: .3rem;
+      }
+
+      .class-controls label,
+      .group-controls label {
+        font-size: .66rem;
+      }
+
+      .class-controls select,
+      .group-controls select,
+      .group-controls button {
+        font-size: .66rem;
+        padding: .18rem .32rem;
+      }
+
+      #name-main {
+        padding: 1rem .8rem;
+      }
+
+      #name-display {
+        font-size: clamp(2.2rem, 13vw, 5.4rem);
+        line-height: .95;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+
+      #name-repeats-indicator {
+        margin-top: .35rem;
+        font-size: 1.25rem;
+      }
+
+      .name-footer,
+      .group-footer {
+        padding: .55rem;
+      }
+
+      #name-reset,
+      #group-reset {
+        font-size: .72rem;
+      }
 
       #group-main {
-        padding: 3rem 1rem 1rem;
+        padding: 2.7rem .75rem .4rem;
+      }
+
+      .group-controls {
+        width: 100%;
+        justify-content: center;
+        row-gap: .35rem;
+      }
+
+      #groups-wrap {
+        padding-top: .9rem;
       }
 
       #groups-container {
+        width: 100%;
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: .85rem .75rem;
+      }
+
+      .group-card {
+        padding-top: .65rem;
+      }
+
+      .group-title {
+        margin-bottom: .55rem;
+        font-size: .68rem;
+      }
+
+      .group-name {
+        margin-bottom: .22rem;
+        font-size: clamp(.95rem, 4.2vw, 1.2rem);
+      }
+
+      .group-placeholder {
+        font-size: clamp(1.4rem, 8vw, 2.6rem);
+        padding: 2.5rem .75rem;
       }
 
       .preset-editor-grid {
         grid-template-columns: 1fr;
+        gap: .35rem;
+        margin-bottom: .65rem;
       }
 
-      .overlay { padding: .75rem; }
+      .overlay {
+        padding: .4rem;
+        align-items: stretch;
+      }
+
+      .overlay-card {
+        width: 100%;
+        max-height: none;
+        height: 100%;
+        border-radius: 6px;
+        padding: 1rem;
+      }
+
+      .overlay-header {
+        margin-bottom: 1rem;
+      }
+
+      .editor-input,
+      .editor-select,
+      .editor-textarea {
+        font-size: 16px;
+      }
+
+      .editor-textarea {
+        min-height: 110px;
+      }
 
       .brand-mark {
-        left: .65rem;
-        bottom: .6rem;
+        left: .6rem;
+        bottom: .5rem;
+      }
+
+      .brand-name {
+        font-size: .64rem;
+      }
+
+      .brand-url {
+        font-size: .44rem;
       }
     }
+
+    @media (max-width: 420px) {
+      .tool-nav {
+        max-width: calc(100% - 5.6rem);
+      }
+
+      .tool-tab {
+        font-size: .64rem;
+        padding: .16rem .27rem;
+      }
+
+      .utility-button {
+        font-size: .64rem;
+        padding: .16rem .27rem;
+      }
+
+      #groups-container {
+        grid-template-columns: 1fr;
+      }
+
+      #timer-display {
+        font-size: clamp(4.2rem, 24vw, 7.5rem);
+      }
+
+      .group-controls {
+        column-gap: .22rem;
+      }
+    }
+
   </style>
 </head>
 
@@ -668,6 +865,7 @@
   </nav>
 
   <div class="utility-nav">
+    <span id="name-skip-indicator" aria-hidden="true">🦅</span>
     <button id="help-button" class="utility-button" aria-label="Help" title="Help">ⓘ</button>
     <button id="theme-button" class="utility-button">THEME</button>
   </div>
@@ -829,8 +1027,6 @@
   <!-- NAMES -->
 
   <section id="names-tool" class="tool-view">
-
-    <div id="name-skip-indicator" aria-hidden="true">🦅</div>
 
     <div class="class-controls names-controls">
       <label for="name-class-select">CLASS</label>
